@@ -1,21 +1,22 @@
 <html>
   <head>
     <title>
-      yolo
+      question
     </title>
   </head>
   <body>
-    {% block content %}
-    <ul>
-      {% for q in qList %}
-          <li>{{ q }}</li>
-      {% endfor %}
-      </ul>
-    <ul>
-      {% for a in aList %}
-          <li>{{ a }}</li>
-      {% endfor %}
-      </ul>
-    {% endblock %}
+      {% extends './header.html' %}
+      {% block content %}
+      <form action="/question-form" method="post">
+        {% csrf_token %}
+        {{form.question_form}}
+        <button type="submit">Ask</button>
+      </form>
+      <form action="/" method="post">
+        {% csrf_token %}
+        {{form.answer_form}}
+        <button type="submit">Ask</button>
+      </form>
+      {% endblock %}
   </body>
 </html>
