@@ -1,19 +1,30 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm
+from django.views.decorators.csrf import csrf_protect
 import pdb
 # Create your views here.
 
-def index(req):
+@csrf_protect
+def ask_question(request):
+  if request.method == 'POST':
+    # create a form instance and populate it with data from the request:
+    form = QuestionForm(request.POST)
+    # check whether it's valid:
+    if form.is_valid():
+        # process the data in form.cleaned_data as required
+        # ...
+        # redirect to a new URL:
+        question = form.cleaned_data['question']
+        question_date = timezone.now()
+        print(question)
+        q = Question(question=question, question_date=question_date)
+        q.save()
+      # return 
 
-  context = {
-    'question_form' : QuestionForm(req.POST),
-    'answer_form' : AnswerForm(req.POST),
-  }
-  if req.method == 'POST':
-    # form = QuestionForm(req.POST)
-    if context['question_form'].is_valid():
-      print(context['question_form'])
+    # if a GET (or any other method) we'll create a blank form
   else:
     form = QuestionForm()
-  return render(req, 'qaplatform/index.html', { 'form': context})
+  return render(request, 'qaplatform/form.html', { 'form': form})

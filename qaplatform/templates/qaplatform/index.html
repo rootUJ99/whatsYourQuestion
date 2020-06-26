@@ -6,17 +6,6 @@
   </head>
   <body>
       {% extends './header.html' %}
-      {% block content %}
-      <form action="/question-form" method="post">
-        {% csrf_token %}
-        {{form.question_form}}
-        <button type="submit">Ask</button>
-      </form>
-      <form action="/" method="post">
-        {% csrf_token %}
-        {{form.answer_form}}
-        <button type="submit">Ask</button>
-      </form>
-      {% endblock %}
+      {% extends './form.html' %}
   </body>
 </html>
