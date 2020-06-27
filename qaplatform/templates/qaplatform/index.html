@@ -6,6 +6,10 @@
   </head>
   <body>
       {% extends './header.html' %}
-      {% extends './form.html' %}
+      {% for o in qlist %}
+        <p>
+          {{o}}
+        </p>
+      {% endfor %}
   </body>
 </html>
