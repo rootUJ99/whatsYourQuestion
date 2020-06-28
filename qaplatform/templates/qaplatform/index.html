@@ -6,10 +6,16 @@
   </head>
   <body>
       {% extends './header.html' %}
-      {% for o in qlist %}
-        <p>
-          {{o}}
-        </p>
-      {% endfor %}
+      <ul>
+        {% for q in qlist %}
+          <li>
+            <a
+              href="{% url 'answer' question_id=q.id %}"
+            >
+            {{q}}
+          </a>
+          </li>
+        {% endfor %}
+      </ul>
   </body>
 </html>

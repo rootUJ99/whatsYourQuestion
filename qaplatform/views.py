@@ -25,3 +25,18 @@ def list_of_questions(request):
   print(qlist)
 
   return render(request, 'qaplatform/list.html', {'qlist': qlist})
+
+
+def answer_for_question(request, question_id):
+  print(question_id)
+  if request.method == 'POST':
+    form = AnswerForm(request.POST)
+    if form.is_valid():
+      answer = form.cleaned_data['answer']
+      answer_date = timezone.now()
+      print(answer)
+      a = Answer(answer=answer, answer_date=answer_date)
+      a.save()
+  else:
+    form = AnswerForm()
+  return(request, 'answers.html', {'form': form})

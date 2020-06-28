@@ -1,7 +1,13 @@
 <div>
-    {% for o in qlist %}
-    <p>
-        {{o}}
-    </p>
-    {% endfor %}
+    <ul>
+        {% for q in qlist %}
+          <li>
+            <a
+              href="{% url 'answer' question_id=q %}"
+            >
+            {{q}}
+          </a>
+          </li>
+        {% endfor %}
+      </ul>
 </div>
