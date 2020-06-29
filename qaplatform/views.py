@@ -8,35 +8,38 @@ from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
 def ask_question(request):
-  if request.method == 'POST':
-    form = QuestionForm(request.POST)
-    if form.is_valid():
-        question = form.cleaned_data['question']
-        question_date = timezone.now()
-        print(question)
-        q = Question(question=question, question_date=question_date)
-        q.save()
-  else:
-    form = QuestionForm()
-  return render(request, 'qaplatform/form.html', {'form': form})
+    print(request.method)
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.cleaned_data['question']
+            question_date = timezone.now()
+            print(question)
+            q = Question(question=question, question_date=question_date)
+            q.save()
+            # HttpResponseRedirect('/questions')
+    else:
+        form = QuestionForm()
+    return render(request, 'qaplatform/form.html', {'form': form})
 
 def list_of_questions(request):
-  qlist = list(Question.objects.all())
-  print(qlist)
+    qlist = list(Question.objects.all())
+    print(qlist)
+    return render(request, 'qaplatform/list.html', {'qlist': qlist})
 
-  return render(request, 'qaplatform/list.html', {'qlist': qlist})
-
-
+@csrf_protect
 def answer_for_question(request, question_id):
-  print(question_id)
-  if request.method == 'POST':
-    form = AnswerForm(request.POST)
-    if form.is_valid():
-      answer = form.cleaned_data['answer']
-      answer_date = timezone.now()
-      print(answer)
-      a = Answer(answer=answer, answer_date=answer_date)
-      a.save()
-  else:
-    form = AnswerForm()
-  return(request, 'answers.html', {'form': form})
+    print(question_id, request.method)
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.cleaned_data['answer']
+            answer_date = timezone.now()
+            question = Question.objects.get(pk=question_id)
+            print(answer, answer_date, question)
+            a = Answer(answer=answer, answer_date=answer_date, question=question)
+            a.save()
+        # HttpResponseRedirect('/questions')
+    else:
+        form = AnswerForm()
+    return render(request, 'qaplatform/answer.html', {'form': form})

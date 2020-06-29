@@ -3,7 +3,7 @@
         {% for q in qlist %}
           <li>
             <a
-              href="{% url 'answer' question_id=q %}"
+              href="{% url 'answer' question_id=q.id %}"
             >
             {{q}}
           </a>
