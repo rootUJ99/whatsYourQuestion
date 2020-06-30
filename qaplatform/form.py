@@ -5,3 +5,6 @@ class QuestionForm(forms.Form):
 
 class AnswerForm(forms.Form):
     answer = forms.CharField(label='Your Answer', max_length=5000)
+
+class SearchQuestion(forms.Form):
+    search = forms.CharField(label='search question',max_length=550)

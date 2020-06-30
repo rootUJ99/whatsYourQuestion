@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from .models import Question, Answer
-from .form import QuestionForm, AnswerForm
+from .form import QuestionForm, AnswerForm, SearchQuestion
 from django.views.decorators.csrf import csrf_protect
 # Create your views here.
 
@@ -24,8 +24,17 @@ def ask_question(request):
 
 def list_of_questions(request):
     qlist = list(Question.objects.all())
+    if request.method == 'POST':
+        form = SearchQuestion(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            searched = list(Question.objects.filter(question__contains=search))
+            return render(request, 'qaplatform/list.html', {'qlist': searched, 'form': form})
+            # return HttpResponseRedirect('/questions/')
+    else:
+        form = SearchQuestion()
     print(qlist)
-    return render(request, 'qaplatform/list.html', {'qlist': qlist})
+    return render(request, 'qaplatform/list.html', {'qlist': qlist, 'form': form})
 
 @csrf_protect
 def answer_for_question(request, question_id):
