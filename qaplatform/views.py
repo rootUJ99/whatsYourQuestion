@@ -17,7 +17,7 @@ def ask_question(request):
             print(question)
             q = Question(question=question, question_date=question_date)
             q.save()
-            # HttpResponseRedirect('/questions')
+            return HttpResponseRedirect('/questions/')
     else:
         form = QuestionForm()
     return render(request, 'qaplatform/form.html', {'form': form})
@@ -39,7 +39,7 @@ def answer_for_question(request, question_id):
             print(answer, answer_date, question)
             a = Answer(answer=answer, answer_date=answer_date, question=question)
             a.save()
-        # HttpResponseRedirect('/questions')
+            return HttpResponseRedirect('/questions/')
     else:
         form = AnswerForm()
-    return render(request, 'qaplatform/answer.html', {'form': form})
+    return render(request, 'qaplatform/answer.html', {'form': form, 'question_id':question_id})

@@ -1,11 +1,11 @@
-<form role="form" method="post" id="answer_form">
+<form action="{% url 'answer' question_id %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Answer</button>
 </form>
-<script>
+<!-- <script>
     const form = document.getElementById('answer_form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
     });
-</script>
+</script> -->
