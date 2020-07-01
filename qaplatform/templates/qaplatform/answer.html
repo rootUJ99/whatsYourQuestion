@@ -4,7 +4,6 @@ Answers
 <p>{{a}}</p>
 {% endfor %}
 {% endif %}
-Your answer
 <form action="{% url 'answer' question_id %}" method="post">
     {% csrf_token %}
     {{ form }}
