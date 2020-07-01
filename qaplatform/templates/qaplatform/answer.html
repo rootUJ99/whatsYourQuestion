@@ -1,13 +1,15 @@
-<form action="{% url 'answer' question_id %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Answer</button>
-</form>
+Answers
 {% if answers%}
 {% for a in answers%}
 <p>{{a}}</p>
 {% endfor %}
 {% endif %}
+Your answer
+<form action="{% url 'answer' question_id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Answer</button>
+</form>
 <!-- <script>
     const form = document.getElementById('answer_form');
     form.addEventListener('submit', (e) => {
