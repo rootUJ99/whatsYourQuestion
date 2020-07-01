@@ -39,6 +39,7 @@ def list_of_questions(request):
 @csrf_protect
 def answer_for_question(request, question_id):
     print(question_id, request.method)
+    answers = Answer.objects.filter(question = question_id)
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -51,4 +52,4 @@ def answer_for_question(request, question_id):
             return HttpResponseRedirect('/questions/')
     else:
         form = AnswerForm()
-    return render(request, 'qaplatform/answer.html', {'form': form, 'question_id':question_id})
+    return render(request, 'qaplatform/answer.html', {'form': form, 'question_id':question_id, 'answers': answers})

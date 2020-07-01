@@ -3,6 +3,11 @@
     {{ form }}
     <button type="submit">Answer</button>
 </form>
+{% if answers%}
+{% for a in answers%}
+<p>{{a}}</p>
+{% endfor %}
+{% endif %}
 <!-- <script>
     const form = document.getElementById('answer_form');
     form.addEventListener('submit', (e) => {
