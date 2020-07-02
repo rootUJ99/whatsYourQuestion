@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
@@ -24,17 +24,8 @@ def ask_question(request):
 
 def list_of_questions(request):
     qlist = list(Question.objects.all())
-    if request.method == 'POST':
-        form = SearchQuestion(request.POST)
-        if form.is_valid():
-            search = form.cleaned_data['search']
-            searched = list(Question.objects.filter(question__contains=search))
-            return render(request, 'qaplatform/list.html', {'qlist': searched, 'form': form})
-            # return HttpResponseRedirect('/questions/')
-    else:
-        form = SearchQuestion()
     print(qlist)
-    return render(request, 'qaplatform/list.html', {'qlist': qlist, 'form': form})
+    return render(request, 'qaplatform/list.html', {'qlist': qlist})
 
 @csrf_protect
 def answer_for_question(request, question_id):
@@ -53,3 +44,12 @@ def answer_for_question(request, question_id):
     else:
         form = AnswerForm()
     return render(request, 'qaplatform/answer.html', {'form': form, 'question_id':question_id, 'answers': answers})
+
+def search_questions(request, param):
+    print('param', param)
+    if request.method == 'GET':
+        if param:
+            searched = list(Question.objects.filter(question__contains=param).values())
+            # return render(request, 'qaplatform/list.html', {'qlist': searched, 'form': form})
+            # return HttpResponseRedirect('/questions/')
+            return JsonResponse({'searched': searched})

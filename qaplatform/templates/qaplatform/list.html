@@ -1,10 +1,6 @@
 <div>
-  <form action="/questions/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Search</button>
-  </form>
-    <ul>
+  <input type="text" name="search questions" id="search_question"/>
+    <ul id="list">
         {% for q in qlist %}
           <li>
             <a
@@ -16,3 +12,20 @@
         {% endfor %}
       </ul>
 </div>
+
+<script>
+  const inputNode = document.querySelector('#search_question')
+  inputNode.addEventListener('change', async (e)=>{
+    const res = await fetch(`/search/${e.target.value}`)
+    const data = await res.json()
+    const ul = document.querySelector('#list');
+    let newEle = '';
+    ul.innerHTML=''
+    data.searched.forEach(it=> {
+      const li = document.createElement('li');
+      li.textContent = `${it.question}`;
+      ul.appendChild(li);
+    })
+    console.log(data)
+  })
+</script>
