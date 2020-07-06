@@ -12,7 +12,7 @@ def login(request):
             user = authenticate(username='john', password='secret')
     else:
         form = AuthenticationForm()
-    return render(request, 'qaplatform/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 def register(request):
     form = UserCreationForm()
@@ -21,4 +21,4 @@ def register(request):
             user = User.objects.create_user()
             user.save()
         
-    return render(request, 'qaplatform/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
