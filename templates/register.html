@@ -1,6 +1,7 @@
 <div>
     Reg
-    <form>
+    <form method="POST" action="{% url 'qaauth:register' %}">
+        {% csrf_token %}
         {{form}}
         <button type="submit">Register</button>
     </form>
