@@ -23,7 +23,10 @@
     ul.innerHTML=''
     data.searched.forEach(it=> {
       const li = document.createElement('li');
-      li.textContent = `${it.question}`;
+      const an = document.createElement('a');
+      an.setAttribute('href', `/answer/${it.id}`)
+      an.textContent = `${it.question}`;
+      li.appendChild(an);
       ul.appendChild(li);
     })
     console.log(data)
