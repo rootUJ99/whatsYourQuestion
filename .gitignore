@@ -9,3 +9,4 @@ media
 
 # Poetry #
 poetry.lock
+.vscode
