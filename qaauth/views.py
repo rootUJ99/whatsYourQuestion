@@ -21,6 +21,7 @@ def sign_in(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+
 def register(request):
     form = UserCreationForm(request.POST)
     if request.method == 'POST':
@@ -29,6 +30,6 @@ def register(request):
             print(form.cleaned_data)
             return redirect('/')
     else:
-        form = UserCreationForm()  
-        
+        form = UserCreationForm()
+
     return render(request, 'register.html', {'form': form})

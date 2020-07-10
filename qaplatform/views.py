@@ -4,7 +4,9 @@ from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
 from django.views.decorators.csrf import csrf_protect
+
 # Create your views here.
+
 
 @csrf_protect
 def ask_question(request):
@@ -22,15 +24,17 @@ def ask_question(request):
         form = QuestionForm()
     return render(request, 'form.html', {'form': form})
 
+
 def list_of_questions(request):
     qlist = list(Question.objects.all())
     print(qlist)
     return render(request, 'list.html', {'qlist': qlist})
 
+
 @csrf_protect
 def answer_for_question(request, question_id):
     print(question_id, request.method)
-    answers = Answer.objects.filter(question = question_id)
+    answers = Answer.objects.filter(question=question_id)
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -43,7 +47,12 @@ def answer_for_question(request, question_id):
             return HttpResponseRedirect('/questions/')
     else:
         form = AnswerForm()
-    return render(request, 'answer.html', {'form': form, 'question_id':question_id, 'answers': answers})
+    return render(
+        request,
+        'answer.html',
+        {'form': form, 'question_id': question_id, 'answers': answers},
+    )
+
 
 def search_questions(request, param):
     print('param', param)
