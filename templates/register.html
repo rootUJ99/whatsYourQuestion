@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <div>
     Reg
     <form method="POST" action="{% url 'qaauth:register' %}">
@@ -6,3 +9,5 @@
         <button type="submit">Register</button>
     </form>
 </div>
+
+{% endblock %}

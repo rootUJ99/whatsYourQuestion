@@ -22,7 +22,7 @@ def ask_question(request):
             return HttpResponseRedirect('/questions/')
     else:
         form = QuestionForm()
-    return render(request, 'form.html', {'form': form})
+    return render(request, 'question.html', {'form': form})
 
 
 def list_of_questions(request):

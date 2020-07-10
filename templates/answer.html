@@ -1,3 +1,8 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
 Answers
 {% if answers%}
 {% for a in answers%}
@@ -9,9 +14,4 @@ Answers
     {{ form }}
     <button type="submit">Answer</button>
 </form>
-<!-- <script>
-    const form = document.getElementById('answer_form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-    });
-</script> -->
+{% endblock %}

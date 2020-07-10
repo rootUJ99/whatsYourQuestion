@@ -1,4 +1,7 @@
-<div>
+
+{% extends "base.html" %}
+
+{% block content %}<div>
     Login
     <form method="POST" action="{% url 'qaauth:login' %}">
         {% csrf_token %}
@@ -6,3 +9,4 @@
         <button type="submit">Login</button>
     </form>
 </div>
+{% endblock %}

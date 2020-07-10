@@ -1,34 +1,66 @@
-<div>
-  <input type="text" name="search questions" id="search_question"/>
-    <ul id="list">
-        {% for q in qlist %}
-          <li>
-            <a
-              href="{% url 'answer' question_id=q.id %}"
-            >
-            {{q}}
-          </a>
-          </li>
-        {% endfor %}
-      </ul>
-</div>
+{% extends "base.html" %}
 
+{% block content %}
+
+<div id="app">
+	<template>
+			<input type="text" name="search questions" id="search_question" @change="handleSearch($event.target.value)" />
+			<div v-if="!searchedList">
+				<ul id="list">
+					{% for q in qlist %}
+					<li>
+						<a href="{% url 'answer' question_id=q.id %}">
+							{{q}}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div v-for="item in searchedList">
+				<ul id="list">
+					<li>
+						<a href=`/answer/${question.id}`>
+							[[ item.question ]]
+						</a>
+					</li>
+				</ul>
+				
+			</div>
+			[[abba]]
+	</template>
+</div>
 <script>
-  const inputNode = document.querySelector('#search_question')
-  inputNode.addEventListener('change', async (e)=>{
-    const res = await fetch(`/search/${e.target.value}`)
-    const data = await res.json()
-    const ul = document.querySelector('#list');
-    let newEle = '';
-    ul.innerHTML=''
-    data.searched.forEach(it=> {
-      const li = document.createElement('li');
-      const an = document.createElement('a');
-      an.setAttribute('href', `/answer/${it.id}`)
-      an.textContent = `${it.question}`;
-      li.appendChild(an);
-      ul.appendChild(li);
-    })
-    console.log(data)
-  })
+	new Vue({
+		delimiters: ["[[","]]"],
+		el: '#app',
+		data: {
+			searchedList: null,
+			abba: 'yess',
+		},
+		methods: {
+			handleSearch: async function(value) {
+				const res = await fetch(`/search/${value}`)
+				const data = await res.json()
+				this.searchedList = data.searched
+			}
+		}
+	})
+	// const inputNode = document.querySelector('#search_question')
+	// inputNode.addEventListener('change', async (e) => {
+	// 	const res = await fetch(`/search/${e.target.value}`)
+	// 	const data = await res.json()
+	// 	const ul = document.querySelector('#list');
+	// 	let newEle = '';
+	// 	ul.innerHTML = ''
+	// 	data.searched.forEach(it => {
+	// 		const li = document.createElement('li');
+	// 		const an = document.createElement('a');
+	// 		an.setAttribute('href', `/answer/${it.id}`)
+	// 		an.textContent = `${it.question}`;
+	// 		li.appendChild(an);
+	// 		ul.appendChild(li);
+	// 	})
+	// 	console.log(data)
+	// })
 </script>
+{% endblock %}

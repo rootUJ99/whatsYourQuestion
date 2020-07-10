@@ -1,9 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
-    {{user}}
-    {{user.is_authenticated}}
     <form action="/" method="post">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Ask</button>
     </form>
 </div>
+{% endblock %}
