@@ -2,7 +2,9 @@ from django import forms
 
 
 class QuestionForm(forms.Form):
-    question = forms.CharField(label='Your Qestion', max_length=550)
+    question = forms.CharField(label='', max_length=550, 
+    widget=forms.TextInput(attrs={'class': "input_question"})
+    )
 
 
 class AnswerForm(forms.Form):

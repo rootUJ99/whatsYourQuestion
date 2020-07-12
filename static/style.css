@@ -1,12 +1,11 @@
 :root {
-    --background: #ccc
-    --font-color: white
+    --font-color: white;
+    --primary-color: blueviolet;
 }
 
 html {
     box-sizing: border-box;
-    background-color: var(--background);
-    color: var(--font-color);
+    /* color: var(--font-color); */
  }
  
   *,
@@ -48,4 +47,34 @@ html {
 .profile-dropdown:hover .dropdown-list {
   display: flex;
   flex-direction: column;
+}
+.hcenter {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 80%;
+  background-color: #F6F6F6;
+  padding: 2rem;
+}
+@media(max-width: 640px){
+  .card {
+    width: 100%;
+  }
+}
+
+.input_question {
+  width: 80%;
+  padding: 0.7rem;
+  border: none;
+  outline: none;
+}
+
+.ask_button {
+  padding: 0.7rem;
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  border: none;
+  border-radius: 0.2rem;
 }

@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div>
-    <form action="/" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Ask</button>
-    </form>
+<div class="hcenter">
+    <div class="card">
+        <p>
+            Be curious ask Questions
+        </p>
+        <form action="/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="ask_button">Ask</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
