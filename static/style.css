@@ -1,0 +1,51 @@
+:root {
+    --background: #ccc
+    --font-color: white
+}
+
+html {
+    box-sizing: border-box;
+    background-color: var(--background);
+    color: var(--font-color);
+ }
+ 
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+ }
+ body {
+   /* font-family: 'Noto Sans KR', sans-serif; */
+   font-family: 'Source Sans Pro', sans-serif;
+   font-size: clamp(1rem, 1vw, 2rem); 
+   margin: 0;
+ 
+ }
+.headContainer {
+    width: 5rem;
+    padding: 1rem;
+    background-color: blueviolet;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.profile-dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.dropdown-list {
+    position: absolute;
+    z-index: 5;
+    display: none;
+    top: 2rem;
+    width: 200px;
+    height: 20px;
+    background: white;
+}
+.dropdown-list > a { color: black}
+.profile-dropdown:hover .dropdown-list {
+  display: flex;
+  flex-direction: column;
+}
