@@ -1,0 +1,34 @@
+<div id="app">
+	<template>
+        <input 
+        type="text" name="search"
+        class="input_question"
+        placeholder="search-question" id="search_question" @change="handleSearch($event.target.value)" />
+        <div v-for="item in searchedList">
+            <ul id="list">
+                <li>
+                    <a href=`/answer/${question.id}`>
+                        [[ item.question ]]
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+	</template>
+</div>
+<script>
+	new Vue({
+		delimiters: ["[[","]]"],
+		el: '#app',
+		data: {
+			searchedList: null,
+		},
+		methods: {
+			handleSearch: async function(value) {
+				const res = await fetch(`/search/${value}`)
+				const data = await res.json()
+				this.searchedList = data.searched
+			}
+		}
+	})
+</script>
