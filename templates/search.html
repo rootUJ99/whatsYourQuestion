@@ -3,7 +3,7 @@
         <input 
         type="text" name="search"
         class="input_question"
-        placeholder="search-question" id="search_question" @change="handleSearch($event.target.value)" />
+        placeholder="search-question" id="search_question" @input="handleSearch($event.target.value)" />
         <div v-for="item in searchedList">
             <ul id="list">
                 <li>
@@ -25,6 +25,7 @@
 		},
 		methods: {
 			handleSearch: async function(value) {
+                console.log('value', value);
 				const res = await fetch(`/search/${value}`)
 				const data = await res.json()
 				this.searchedList = data.searched
