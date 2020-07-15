@@ -40,7 +40,6 @@ html {
     display: none;
     top: 2rem;
     width: 200px;
-    height: 20px;
     background: white;
 }
 .dropdown-list > a { color: black}

@@ -1,21 +1,42 @@
 <div id="app">
 	<template>
-        <input 
-        type="text" name="search"
-        class="input_question"
-        placeholder="search-question" id="search_question" @input="handleSearch($event.target.value)" />
-        <div v-for="item in searchedList">
-            <ul id="list">
-                <li>
-                    <a href=`/answer/${question.id}`>
-                        [[ item.question ]]
-                    </a>
-                </li>
-            </ul>
-            
+        <div class="search_container">
+            <input 
+            type="text" name="search"
+            class="input_question"
+            placeholder="search-question" id="search_question" @input="handleSearch($event.target.value)" />
+            <div class="list_searched">
+                <ul>
+            <li v-for="item in searchedList">
+                        <a href=`/answer/${question.id}`>
+                            [[ item.question ]]
+                        </a>
+            </li>
+            </div>
+        </ul>
         </div>
 	</template>
 </div>
+<style>
+    .input_question:focus {
+        width: 500px;
+        /* transition: width 0.4s ease-out; */
+    }
+    .search_container {
+        position: relative;
+    }
+    .list_searched {
+        position: absolute;
+        z-index: 6;
+        top: 3rem;
+        display: none;
+        background: white;
+        width: 500px;
+    }
+    .search_container:hover .list_searched {
+        display: block;
+    }
+</style>
 <script>
 	new Vue({
 		delimiters: ["[[","]]"],
