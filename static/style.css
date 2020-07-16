@@ -77,3 +77,12 @@ html {
   border: none;
   border-radius: 0.2rem;
 }
+
+.remove_bullet {
+  list-style-type: none;
+  color: gray;
+}
+
+.min_width {
+  min-width: 300px;
+}

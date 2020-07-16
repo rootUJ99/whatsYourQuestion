@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 @csrf_protect
 def ask_question(request):
     print(request.method)
+    qlist = list(Question.objects.all())
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -22,13 +23,7 @@ def ask_question(request):
             return HttpResponseRedirect('/questions/')
     else:
         form = QuestionForm()
-    return render(request, 'question.html', {'form': form})
-
-
-def list_of_questions(request):
-    qlist = list(Question.objects.all())
-    print(qlist)
-    return render(request, 'list.html', {'qlist': qlist})
+    return render(request, 'question.html', {'form': form, 'qlist': qlist})
 
 
 @csrf_protect

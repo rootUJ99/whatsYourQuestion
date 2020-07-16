@@ -12,4 +12,17 @@
         </form>
     </div>
 </div>
+<div class="hcenter min_width">
+    <ul style="list-style-type:none; color: gray;" class="remove_bullet">
+        {% for q in qlist %}
+        <div class="card">
+            <li>
+                <a href="{% url 'answer' question_id=q.id %}">
+                    {{q}}
+                </a>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
