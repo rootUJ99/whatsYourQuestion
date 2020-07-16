@@ -6,11 +6,12 @@
             class="input_question"
             placeholder="search-question" id="search_question" @input="handleSearch($event.target.value)" />
             <div class="list_searched">
-                <ul>
+                <ul class="remove_bullet">
             <li v-for="item in searchedList">
-                        <a href=`/answer/${question.id}`>
-                            [[ item.question ]]
-                        </a>
+                    <a href=`/answer/${question.id}` class="anchor_decoration">
+                        [[ item.question ]]
+                    </a>
+                        
             </li>
             </div>
         </ul>
@@ -27,7 +28,10 @@
         top: 3rem;
         display: none;
         background: white;
-        width: 500px;
+        width: 400px;
+    }
+    .input_question:focus {
+        width: 400px;
     }
     .search_container:hover .list_searched {
         display: block;

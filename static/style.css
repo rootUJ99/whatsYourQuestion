@@ -78,11 +78,21 @@ html {
   border-radius: 0.2rem;
 }
 
-.remove_bullet {
+.remove_bullet{
   list-style-type: none;
+}
+.anchor_decoration {
+  text-decoration: none;
   color: gray;
 }
 
 .min_width {
   min-width: 300px;
+}
+
+.card_list {
+  background-color: #F6F6F6;
+  padding: 1.5rem;
+  width: 400px; 
+  margin: 0.5rem;
 }
