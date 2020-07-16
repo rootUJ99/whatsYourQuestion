@@ -2,16 +2,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-Answers
-{% if answers%}
-{% for a in answers%}
-<p>{{a}}</p>
-{% endfor %}
-{% endif %}
-<form action="{% url 'answer' question_id %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Answer</button>
-</form>
+<div class="hcenter">
+    <div class="flex_column">
+        <p>
+            {{question}}
+        </p>
+        
+        {% if answers%}
+        {% for a in answers%}
+        <p>{{a}}</p>
+        {% endfor %}
+        {% endif %}
+        
+        <form action="{% url 'answer' question_id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="answer_button">Answer</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

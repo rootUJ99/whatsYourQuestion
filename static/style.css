@@ -20,6 +20,10 @@ html {
    margin: 0;
  
  }
+.flex_column{
+  display: flex;
+  flex-direction: column;
+}
 .headContainer {
     width: 5rem;
     padding: 1rem;
@@ -95,4 +99,19 @@ html {
   padding: 1.5rem;
   width: 400px; 
   margin: 0.5rem;
+}
+
+.input_answer {
+  width: 80%;
+  padding: 0.7rem;
+  border: 1px solid gray;
+  outline: gray;
+}
+
+.answer_button {
+  padding: 0.7rem;
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  border: none;
+  border-radius: 0.2rem;
 }

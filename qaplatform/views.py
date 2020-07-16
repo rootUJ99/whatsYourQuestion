@@ -30,12 +30,12 @@ def ask_question(request):
 def answer_for_question(request, question_id):
     print(question_id, request.method)
     answers = Answer.objects.filter(question=question_id)
+    question = Question.objects.get(pk=question_id)
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.cleaned_data['answer']
             answer_date = timezone.now()
-            question = Question.objects.get(pk=question_id)
             print(answer, answer_date, question)
             a = Answer(answer=answer, answer_date=answer_date, question=question)
             a.save()
@@ -45,7 +45,7 @@ def answer_for_question(request, question_id):
     return render(
         request,
         'answer.html',
-        {'form': form, 'question_id': question_id, 'answers': answers},
+        {'form': form, 'question_id': question_id, 'answers': answers, 'question': question},
     )
 
 
