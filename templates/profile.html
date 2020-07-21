@@ -2,6 +2,7 @@
 {% block content %}
 <div>
     {{user}}
+    <a href="{% url 'qaauth:logout' %}"> logout</a>
 </div>
 {% endblock content %}
     
