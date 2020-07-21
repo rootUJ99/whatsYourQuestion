@@ -16,7 +16,7 @@ def sign_in(request):
             if user is not None:
                 login(request, user)
             return redirect('/')
-        return redirect('auth:register')
+        return redirect('qaauth:register')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -33,3 +33,9 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'register.html', {'form': form})
+
+def profile(request):
+    if User.is_authenticated == False:
+        return redirect('uaa/login')
+    print('auth', User.is_authenticated)
+    return render(request, 'profile.html')

@@ -4,21 +4,24 @@
 {% block content %}
 <div class="hcenter">
     <div class="flex_column">
-        <p>
-            {{question}}
-        </p>
+        <div class="card_list">
+                {{question}}
+        </div>
         
         {% if answers%}
         {% for a in answers%}
-        <p>{{a}}</p>
+        <div class="card_list">
+            <p>{{a}}</p>
+        </div>
         {% endfor %}
         {% endif %}
-        
+    <div class="card_list">
         <form action="{% url 'answer' question_id %}" method="post">
             {% csrf_token %}
             {{ form }}
             <button type="submit" class="answer_button">Answer</button>
         </form>
+    </div>
     </div>
 </div>
 {% endblock %}
