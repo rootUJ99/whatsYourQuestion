@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 def sign_in(request):
+    if request.user.is_authenticated == True:
+        return redirect('/')
     if request.method == 'POST':
         form = LoginForm(request=request, data=request.POST)
         print(form.is_valid())
@@ -24,7 +26,7 @@ def sign_in(request):
 
 
 def register(request):
-    if User.is_authenticated != 'AnonymousUser':
+    if request.user.is_authenticated == True:
         return redirect('/')
     form = RegisterForm(request.POST)
     if request.method == 'POST':
@@ -38,7 +40,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def profile(request):
-    if User.is_authenticated != 'AnonymousUser':
+    if request.user.is_authenticated == False:
         return redirect('/uaa/login')
     print('auth', User.is_authenticated)
     return render(request, 'profile.html')

@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    Reg
+<div class="hcenter">
     <form method="POST" action="{% url 'qaauth:register' %}">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit">Register</button>
+        <div class="card form_box">
+            Registration
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class="ask_button">Register</button>
+        </div>
     </form>
 </div>
 

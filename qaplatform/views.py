@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
@@ -25,7 +26,7 @@ def ask_question(request):
         form = QuestionForm()
     return render(request, 'question.html', {'form': form, 'qlist': qlist})
 
-
+@staff_member_required(login_url='/uaa/login')
 @csrf_protect
 def answer_for_question(request, question_id):
     print(question_id, request.method)

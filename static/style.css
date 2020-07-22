@@ -1,6 +1,7 @@
 :root {
     --font-color: white;
     --primary-color: blueviolet;
+    --card-background: #F6F6F6;
 }
 
 html {
@@ -36,6 +37,12 @@ html {
   position: relative;
   display: flex;
   flex-direction: row-reverse;
+}
+.profile-button {
+  border-radius: 50%;
+  border: 0.1rem solid white;
+  background: var(--card-background);
+  outline: none;
 }
 
 .dropdown-list {
@@ -114,4 +121,17 @@ html {
   color: var(--font-color);
   border: none;
   border-radius: 0.2rem;
+}
+
+.form_box {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-gap: 0.5rem;
+  width: 20rem;
+}
+
+.form_input {
+  padding: 0.7rem;
+  border: none;
+  outline: gray;
 }
