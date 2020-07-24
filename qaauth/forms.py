@@ -4,7 +4,7 @@ from django import forms
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
-        super(AuthenticationForm, self).__init__(*args, **kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
     
     username = forms.CharField(label= '',widget=forms.TextInput(
         attrs={'class': 'form_input', 'placeholder': 'Enter USername', }))
@@ -13,7 +13,7 @@ class LoginForm(AuthenticationForm):
 
 class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
-        super(UserCreationForm, self).__init__(*args, **kwargs)
+        super(RegisterForm, self).__init__(*args, **kwargs)
     
     username = forms.CharField(label= '',widget=forms.TextInput(
         attrs={'class': 'form_input', 'placeholder': 'Enter USername', }))
