@@ -1,29 +1,8 @@
-[tool.poetry]
-name = "whatsyourquestion"
-version = "0.1.0"
-description = ""
-authors = ["Ujwal <ujwal99arak@gmail.com>"]
-
-[tool.poetry.dependencies]
-python = "^3.7"
-django = "^3.0.4"
-psycopg2 = "^2.8.4"
-black = "^19.10b0"
-
-[tool.poetry.dev-dependencies]
-flake8 = "^3.8.3"
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
-
 [tool.black]
 line-length = 88
 target-version = ['py37']
 include = '\.pyi?$'
-exclude = '''
-
-(
+exclude = '''(
   /(
       \.eggs         # exclude a few common directories in the
     | \.git          # root of the project
@@ -39,5 +18,26 @@ exclude = '''
   )/
   | foo.py           # also separately exclude a file named foo.py in
                      # the root of the project
-)
-'''
+)'''
+
+[tool.poetry]
+name = "whatsyourquestion"
+version = "0.1.0"
+description = ""
+authors = ["Ujwal <ujwal99arak@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+django = "^3.0.4"
+psycopg2 = "^2.8.4"
+gunicorn = "^20.0.4"
+python-dotenv = "^0.14.0"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.8.3"
+black = "^19.10b0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
