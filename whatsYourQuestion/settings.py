@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'whatsYourQuestion.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'qaplatform',
-        'USER': 'ujwal',
-        'PASSWORD': 'fsoc00',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME','qaplatform'),
+        'USER': os.environ.get('DB_USER','ujwal'),
+        'PASSWORD': os.environ.get('DB_PASSWORD','fsoc00'),
+        'HOST': os.environ.get('DB_HOST','localhost'),
+        'PORT': os.environ.get('DB_POST', '5432'),
     }
 }
 

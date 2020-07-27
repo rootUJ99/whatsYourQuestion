@@ -7,12 +7,14 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN pip install poetry
-
-COPY poetry.lock pyproject.toml /app/
-
 RUN poetry config virtualenvs.create false
+COPY pyproject.toml /app/
+RUN poetry export -f requirements.txt -o requirements.txt
 
-RUN poetry install --no-interaction --no-dev
+
+# RUN poetry install --no-interaction --no-dev
+
+RUN pip install -r requirements.txt
 
 COPY . /app
 
