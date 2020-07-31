@@ -58,3 +58,6 @@ def search_questions(request, param):
             # return render(request, 'list.html', {'qlist': searched, 'form': form})
             # return HttpResponseRedirect('/questions/')
             return JsonResponse({'searched': searched})
+
+
+# %%
