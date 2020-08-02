@@ -18,9 +18,10 @@
         <ul class="remove_bullet">
             {% for q in qlist %}
             <div class="card_list">
+                {{q.username}}
                 <li>
                     <a href="{% url 'answer' question_id=q.id %}" class="anchor_decoration">
-                        {{q}}
+                        {{q.question}}
                     </a>
                 </li>
             </div>

@@ -5,6 +5,7 @@ from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ from django.views.decorators.csrf import csrf_protect
 @csrf_protect
 def ask_question(request):
     print(request.method)
-    qlist = list(Question.objects.all())
+    qlist = list(Question.objects.all().values())
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -59,5 +60,3 @@ def search_questions(request, param):
             # return HttpResponseRedirect('/questions/')
             return JsonResponse({'searched': searched})
 
-
-# %%

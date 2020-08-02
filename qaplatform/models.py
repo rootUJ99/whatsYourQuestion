@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 class Question(models.Model):
     user = models.ForeignKey(
       get_user_model(),
-      on_delete=models.CASCADE
+      on_delete=models.CASCADE,
     )
     question = models.CharField(max_length=550)
     # tags = models
@@ -17,7 +17,7 @@ class Question(models.Model):
 class Answer(models.Model):
     user = models.ForeignKey(
       get_user_model(),
-      on_delete=models.CASCADE
+      on_delete=models.CASCADE,
     )
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=5000)
@@ -29,7 +29,7 @@ class Answer(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(
       get_user_model(),
-      on_delete=models.CASCADE
+      on_delete=models.CASCADE,
     )
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     comment = models.CharField(max_length= 5000)
