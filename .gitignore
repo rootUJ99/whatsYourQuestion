@@ -10,3 +10,7 @@ media
 # Poetry #
 poetry.lock
 .vscode
+frontend/node_modules
+frontend/.DS_Store
+frontend/dist
+*.local

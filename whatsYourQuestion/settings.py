@@ -31,6 +31,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'qaplatform',
     'qaauth',
+    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,7 +73,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'whatsYourQuestion.wsgi.application'
-
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

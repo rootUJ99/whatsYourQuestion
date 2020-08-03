@@ -60,3 +60,11 @@ def search_questions(request, param):
             # return HttpResponseRedirect('/questions/')
             return JsonResponse({'searched': searched})
 
+
+
+# rest apis
+
+def question_list(request):
+    print(request.method)
+    question_list = list(Question.objects.all().values())
+    return JsonResponse({'questions': question_list})
