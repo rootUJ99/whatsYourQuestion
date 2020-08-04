@@ -2,13 +2,13 @@
   <div class="hcenter">
     <div class="flex_column">
         <div class="card_list">
-                {{data.question.question}}
+                {{data?.question?.question}}
         </div>
         
         <!-- {% if answers%}
         {% for a in answers%} -->
-        <div v-if="data.answers.length" >
-          <div v-for="a in data.answers" class="card_list" :key="a.id">
+        <div v-if="data?.answers?.length" >
+          <div v-for="a in data?.answers" class="card_list" :key="a.id">
               <p>{{a.answer}}</p>
           </div>
         </div>
