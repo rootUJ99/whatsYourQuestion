@@ -30,7 +30,7 @@
 
 import axios from 'axios';
 export default {
-    name: 'Hello',
+    name: 'Home',
     data: function(){
       return {questions: null,}
     },

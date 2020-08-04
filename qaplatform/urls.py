@@ -7,4 +7,5 @@ urlpatterns = [
     path('answer/<int:question_id>/', views.answer_for_question, name='answer'),
     path('search/<param>/', views.search_questions, name='search'),
     path('question', views.question_list),
+    path('question-answer/<int:question_id>/', views.question_with_answer),
 ]

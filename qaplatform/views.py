@@ -68,3 +68,9 @@ def question_list(request):
     print(request.method)
     question_list = list(Question.objects.all().values())
     return JsonResponse({'questions': question_list})
+
+
+def question_with_answer(request, question_id):
+    answers = Answer.objects.filter(question=question_id).values()
+    # question = Question.objects.get(pk=question_id)
+    return JsonResponse({'question': 'question', 'answers': answers})
