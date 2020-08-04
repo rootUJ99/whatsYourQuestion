@@ -1,16 +1,18 @@
 <template>
   <div class="hcenter">
     <div class="flex_column">
-        <!-- <div class="card_list">
-                {{question}}
-        </div> -->
+        <div class="card_list">
+                {{data.question.question}}
+        </div>
         
         <!-- {% if answers%}
-        {% for a in answers%}
-        <div class="card_list">
-            <p>{{a}}</p>
+        {% for a in answers%} -->
+        <div v-if="data.answers.length" >
+          <div v-for="a in data.answers" class="card_list" :key="a.id">
+              <p>{{a.answer}}</p>
+          </div>
         </div>
-        {% endfor %}
+        <!-- {% endfor %}
         {% endif %} -->
     <div class="card_list">
         <form>
@@ -31,9 +33,9 @@ export default {
   },
   async mounted() {
     try {
-        const res = await axios.get('http://localhost:8000/question-answer/1/');
+        const res = await axios.get(`http://localhost:8000/question-answer/${this.$route.params.id}/`);
         console.log(res)
-        this.questions = res?.data?.questions;
+        this.data = res?.data
       } catch (err) {
         console.log('err', err)
       }

@@ -14,7 +14,7 @@
     </div>
     <div class="hcenter">
         <ul class="remove_bullet">
-            <div class="card_list" v-for="q in questions" :key="q.id">
+            <div class="card_list" v-for="q in questions" :key="q.id" @click="getDataFromParam(q.id)">
                 {{q.username}}
                 <li>
                     <a href="#" class="anchor_decoration">
@@ -42,6 +42,11 @@ export default {
       } catch (err) {
         console.log('err', err)
       }
+    },
+    methods: {
+        getDataFromParam(id) {
+            this.$router.push({ name: 'question', params: {id}})
+        }
     }
 }
 </script>

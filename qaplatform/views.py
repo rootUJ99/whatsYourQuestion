@@ -71,6 +71,6 @@ def question_list(request):
 
 
 def question_with_answer(request, question_id):
-    answers = Answer.objects.filter(question=question_id).values()
-    # question = Question.objects.get(pk=question_id)
-    return JsonResponse({'question': 'question', 'answers': answers})
+    answers = list(Answer.objects.filter(question=question_id).values())
+    question = list(Question.objects.filter(pk=question_id).values())[0]
+    return JsonResponse({'question': question, 'answers': answers})
