@@ -74,3 +74,8 @@ def question_with_answer(request, question_id):
     answers = list(Answer.objects.filter(question=question_id).values())
     question = list(Question.objects.filter(pk=question_id).values())[0]
     return JsonResponse({'question': question, 'answers': answers})
+
+@csrf_protect
+def post_answer(request):
+    if request.method == 'POST':
+        pass
