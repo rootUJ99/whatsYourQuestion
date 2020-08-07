@@ -6,7 +6,8 @@ class Question(models.Model):
       get_user_model(),
       on_delete=models.CASCADE,
     )
-    question = models.CharField(max_length=550)
+    question = models.CharField(max_length=280)
+    description = models.CharField(max_length=800)
     # tags = models
     question_date = models.DateTimeField('date published')
 
@@ -20,8 +21,10 @@ class Answer(models.Model):
       on_delete=models.CASCADE,
     )
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=5000)
+    answer = models.CharField(max_length=10000)
     answer_date = models.DateTimeField('date published')
+    upvote = models.IntegerField(),
+    downvote = models.IntegerField(),
 
     def __str__(self):
         return f'{self.answer}'
