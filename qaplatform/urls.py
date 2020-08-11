@@ -9,4 +9,5 @@ urlpatterns = [
     path('question', views.question_list),
     path('question-answer/<int:question_id>/', views.question_with_answer),
     path('answer-post', views.post_answer),
+    path('post_question', views.post_question),
 ]

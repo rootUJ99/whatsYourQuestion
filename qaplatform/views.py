@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.contrib.auth.models import User
-
+import json
 # Create your views here.
 
 
@@ -78,6 +78,32 @@ def question_with_answer(request, question_id):
 @csrf_exempt
 def post_answer(request):
     if request.method == 'POST':
-        return JsonResponse({
-            'hello': 'answer is working',
-        })
+        answer_date = timezone.now()
+        try:
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            question_id = body['question_id']
+            answer = body['answer']
+            user_id = body['user_id']
+            question = Question.objects.get(pk=question_id)
+            user = User.objects.get(pk=user_id)
+            a = Answer(answer=answer, answer_date=answer_date, question=question, user=user)
+            a.save()
+            return question_with_answer(request, question_id)
+        except:
+            return HttpResponseBadRequest()
+@csrf_exempt
+def post_question(request):
+    if request.method == 'POST':
+        try:
+            question_date = timezone.now()
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            question = body['question']
+            user_id = body['user_id']
+            user = User.objects.get(pk=user_id)
+            q = Question(question=question, question_date=question_date, user=user)
+            q.save()
+            return question_list(request)
+        except:
+            return HttpResponseBadRequest()

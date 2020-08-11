@@ -6,10 +6,8 @@
             <p>
                 Be curious ask Questions
             </p>
-            <form action="/" method="post">
-                <input name="input_question" class="input_question"/>
-                <button type="submit" class="ask_button">Ask</button>
-            </form>
+                <input name="input_question" class="input_question" v-model="question"/>
+                <button type="submit" class="ask_button" @click="onSubmitQuestion">Ask</button>
         </div>
     </div>
     <div class="hcenter">
@@ -32,7 +30,10 @@ import axios from 'axios';
 export default {
     name: 'Home',
     data: function(){
-      return {questions: null,}
+      return {
+        questions: null,
+        qestion: null,
+      }
     },
     async mounted() {
       try {
@@ -46,6 +47,18 @@ export default {
     methods: {
         getDataFromParam(id) {
             this.$router.push({ name: 'question', params: {id}})
+        },
+        async onSubmitQuestion() {
+            try {
+              const res = await axios.post('http://localhost:8000/post_question', {
+                question: this.question,
+                user_id: 1,
+              });
+              // console.log(res?.data);
+              this.questions = res?.data?.questions;
+            } catch (err){
+              console.log(err);
+            }
         }
     }
 }
