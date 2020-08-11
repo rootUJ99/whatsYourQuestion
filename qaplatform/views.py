@@ -4,7 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 from .models import Question, Answer
 from .form import QuestionForm, AnswerForm, SearchQuestion
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -75,7 +75,9 @@ def question_with_answer(request, question_id):
     question = list(Question.objects.filter(pk=question_id).values())[0]
     return JsonResponse({'question': question, 'answers': answers})
 
-@csrf_protect
+@csrf_exempt
 def post_answer(request):
     if request.method == 'POST':
-        pass
+        return JsonResponse({
+            'hello': 'answer is working',
+        })

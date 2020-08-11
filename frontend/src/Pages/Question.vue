@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     async onSubmit(){
-      console.log(this.answer)
+      console.log(this.data)
       try {
         const res = await axios.post('http://localhost:8000/answer-post', {
           answer: this.answer,
