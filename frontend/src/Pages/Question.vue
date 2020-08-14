@@ -28,7 +28,7 @@ export default {
   },
   async mounted() {
     try {
-        const res = await axios.get(`http://localhost:8000/question-answer/${this.$route.params.id}/`);
+        const res = await axios.get(`http://localhost:8000/api/question-answer-list/${this.$route.params.id}/`);
         console.log(res.data)
         this.list = res?.data
       } catch (err) {
@@ -37,14 +37,14 @@ export default {
   },
   methods: {
     async onSubmit(){
-      console.log(this.list.question.id)
       try {
-        const res = await axios.post('http://localhost:8000/answer-post', {
+        const res = await axios.post('http://localhost:8000/api/post-answer', {
           answer: this.answer,
           question_id: this.list.question.id,
           user_id:  this.list.question.user_id,
         });
         this.list = res?.data
+        this.answer = null
       } catch(err) {
         console.log('err', err);
       }
