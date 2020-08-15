@@ -49,3 +49,10 @@ def post_question(request):
             return question_list(request)
         except:
             return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def post_comment(request):
+    if request.method == 'POST':
+        pass
+            

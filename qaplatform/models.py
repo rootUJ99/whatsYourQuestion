@@ -45,7 +45,7 @@ class Comment(models.Model):
     )
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     comment = models.CharField(max_length= 5000)
-    comment_data = models.DateTimeField('date published')
+    comment_date = models.DateTimeField('date published')
 
     def __str__(self):
         return f'{self.comment}'
