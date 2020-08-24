@@ -3,8 +3,12 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from qaplatform.models import Question, Answer
+from qaplatform.models import Question, Answer, Comment
 import json
+
+def bodyUnicodeHelper(req):
+    body_unicode = req.body.decode('utf-8')
+    return json.loads(body_unicode)
 
 def question_list(request):
     print(request.method)
@@ -34,6 +38,7 @@ def post_answer(request):
             return question_with_answer(request, question_id)
         except:
             return HttpResponseBadRequest()
+
 @csrf_exempt
 def post_question(request):
     if request.method == 'POST':
@@ -54,5 +59,16 @@ def post_question(request):
 @csrf_exempt
 def post_comment(request):
     if request.method == 'POST':
-        pass
-            
+        try:
+            comment_date = timezone.now()
+            body = bodyUnicodeHelper(request)
+            comment = body['comment']
+            user_id = body['user_id']
+            answer_id = body['answer_id']
+            user = User.objects.get(pk=user_id)
+            answer = Answer.objects.get(pk=answer_id)
+            c = Comment(comment_date=comment_date, answer=answer, user=user, comment=comment)
+            c.save()
+            return question_list(request)
+        except:
+            return HttpResponseBadRequest()

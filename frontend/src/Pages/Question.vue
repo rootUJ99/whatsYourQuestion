@@ -7,6 +7,8 @@
         <div v-if="list?.answers?.length" >
           <div v-for="a in list?.answers" class="card_list" :key="a.id">
               <p>{{a.answer}}</p>
+           <textarea class="input_answer" name="comment" v-model="comment"/>
+           <button class="answer_button" @click="onSubmitComment(a.id)">Comment</button>
           </div>
         </div>
     <div class="card_list">
@@ -24,6 +26,7 @@ export default {
     return {
       list: null,
       answer: null,
+      comment: null,
       }
   },
   async mounted() {
@@ -49,6 +52,17 @@ export default {
         console.log('err', err);
       }
       // this.answer=null;
+    },
+    async onSubmitComment(answer_id) {
+      try {
+        const res = await axios.post('http://localhost:8000/api/post-comment', {
+          comment: this.comment,
+          answer_id,
+          user_id: this.list.question.user_id,
+        })
+      } catch(err) {
+        console.log('err', err);
+      }
     }
   }
 }

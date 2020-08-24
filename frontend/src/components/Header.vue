@@ -1,6 +1,5 @@
 <template>
 <div>
-  <Search/>
   <div class="headContainer">
     <div class="profile-dropdown">
       <button class="profile-button">
@@ -10,11 +9,10 @@
       </button>
       <div class="dropdown-list">
         <a href="#">My Profile</a>
-        
         <a href="#">Sign Out</a>
-        
       </div>
     </div>
+    <Search/>
   </div>
 </div>
 </template>
