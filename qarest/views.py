@@ -18,8 +18,11 @@ def question_list(request):
 
 def question_with_answer(request, question_id):
     answers = list(Answer.objects.filter(question=question_id).values())
+    answer_with_comment = [
+       {'comment': list(Comment.objects.filter(pk=ans['id']).values()), **ans} for ans in answers 
+    ]
     question = list(Question.objects.filter(pk=question_id).values())[0]
-    return JsonResponse({'question': question, 'answers': answers})
+    return JsonResponse({'question': question, 'answers': answer_with_comment})
 
 @csrf_exempt
 def post_answer(request):
@@ -65,10 +68,11 @@ def post_comment(request):
             comment = body['comment']
             user_id = body['user_id']
             answer_id = body['answer_id']
+            question_id = body['question_id']
             user = User.objects.get(pk=user_id)
             answer = Answer.objects.get(pk=answer_id)
             c = Comment(comment_date=comment_date, answer=answer, user=user, comment=comment)
             c.save()
-            return question_list(request)
+            return question_with_answer(request, question_id)
         except:
             return HttpResponseBadRequest()

@@ -7,6 +7,11 @@
         <div v-if="list?.answers?.length" >
           <div v-for="a in list?.answers" class="card_list" :key="a.id">
               <p>{{a.answer}}</p>
+              <div v-if="a.comment.length">
+                <div v-for="c in a.comment" :key="c.id">
+                  &nbsp; &nbsp;{{c.comment}}
+                </div>
+              </div>
            <textarea class="input_answer" name="comment" v-model="comment"/>
            <button class="answer_button" @click="onSubmitComment(a.id)">Comment</button>
           </div>
@@ -59,6 +64,7 @@ export default {
           comment: this.comment,
           answer_id,
           user_id: this.list.question.user_id,
+          question_id: this.list.question.id,
         })
       } catch(err) {
         console.log('err', err);
