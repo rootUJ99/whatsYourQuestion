@@ -19,7 +19,7 @@ def question_list(request):
 def question_with_answer(request, question_id):
     answers = list(Answer.objects.filter(question=question_id).values())
     answer_with_comment = [
-       {'comment': list(Comment.objects.filter(pk=ans['id']).values()), **ans} for ans in answers 
+       {'comment': list(Comment.objects.filter(answer=ans['id']).values()), **ans} for ans in answers 
     ]
     question = list(Question.objects.filter(pk=question_id).values())[0]
     return JsonResponse({'question': question, 'answers': answer_with_comment})
@@ -29,8 +29,7 @@ def post_answer(request):
     if request.method == 'POST':
         answer_date = timezone.now()
         try:
-            body_unicode = request.body.decode('utf-8')
-            body = json.loads(body_unicode)
+            body = bodyUnicodeHelper(request)
             question_id = body['question_id']
             answer = body['answer']
             user_id = body['user_id']
@@ -47,8 +46,7 @@ def post_question(request):
     if request.method == 'POST':
         try:
             question_date = timezone.now()
-            body_unicode = request.body.decode('utf-8')
-            body = json.loads(body_unicode)
+            body = bodyUnicodeHelper(request)
             question = body['question']
             user_id = body['user_id']
             user = User.objects.get(pk=user_id)
