@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         getDataFromParam(id) {
-            this.$router.push({ name: 'question', params: {id}})
+            this.$router.push({ name: 'detail', params: {id}})
         },
         async onSubmitQuestion() {
             try {

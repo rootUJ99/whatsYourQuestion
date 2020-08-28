@@ -34,8 +34,6 @@
   margin: 0.5rem;
   border-left: 0.1rem solid gray;
 }
-.veritcal_hr {
-}
 </style>
 <script>
 import axios from "axios";
