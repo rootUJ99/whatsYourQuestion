@@ -37,17 +37,21 @@
 </style>
 <script>
 import axios from 'axios';
+import { ref, computed, watch, onMounted } from "vue";
+
 export default {
   name: 'Search',
-  data: function() {
-			return {searchedList: null,}
-		},
-		methods: {
-			handleSearch: async function(value) {
+  setup() {
+    const searchedList = ref(null);
+    const handleSearch = async (value) => {
                 console.log('value', value);
 				const res = await axios(`http://localhost:8000/search/${value}`)
-				this.searchedList = res?.data?.searched
+				searchedList.value = res?.data?.searched
 			}
-		}
+    return {
+      searchedList,
+      handleSearch,
+    }
+  },
 }
 </script>

@@ -37,6 +37,7 @@
 </style>
 <script>
 import axios from "axios";
+import {ref, onMounted} from 'vue';
 export default {
   name: "Question",
   data() {
@@ -46,6 +47,7 @@ export default {
       comment: [],
     };
   },
+  
   async mounted() {
     try {
       const res = await axios.get(
@@ -87,5 +89,61 @@ export default {
       }
     },
   },
+
+  // setup(){
+  //   const list = ref(null);
+  //   const answer = ref(null);
+  //   const comment = ref([]);
+
+  //   onMounted(async ()=>{
+  //     try {
+  //       const res = await axios.get(
+  //       `http://localhost:8000/api/question-answer-list/${this.$route.params.id}/`
+  //     );
+  //       console.log(res.data);
+  //       list.value = res?.data;
+  //     } catch (err) {
+  //       console.log("err", err);
+  //     }
+  //   });
+
+  //   const onSubmit = async () => {
+  //     try {
+  //       const res = await axios.post("http://localhost:8000/api/post-answer", {
+  //         answer: answer.value,
+  //         question_id: list.value.question.id,
+  //         user_id: list.value.question.user_id,
+  //       });
+  //       list.value = res?.data;
+  //       answer.value = null;
+  //     } catch (err) {
+  //       console.log("err", err);
+  //     }
+  //     // answer.value=null;
+  //   };
+
+  //   const onSubmitComment = async (answer_id, index) => {
+  //     try {
+  //       const res = await axios.post("http://localhost:8000/api/post-comment", {
+  //         comment: comment.value[index],
+  //         answer_id,
+  //         user_id: list.value.question.user_id,
+  //         question_id: list.value.question.id,
+  //       });
+  //       list.value = res?.data;
+  //       delete comment.value[index]
+  //     } catch (err) {
+  //       console.log("err", err);
+  //     }
+  //   };
+
+  //   return {
+  //     list,
+  //     answer,
+  //     comment,
+  //     onSubmit,
+  //     onSubmitComment,
+  //   }
+  // },
 };
 </script>
