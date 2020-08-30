@@ -37,113 +37,114 @@
 </style>
 <script>
 import axios from "axios";
+import {} from 'vue-router';
 import {ref, onMounted} from 'vue';
 export default {
   name: "Question",
-  data() {
-    return {
-      list: null,
-      answer: null,
-      comment: [],
-    };
-  },
+  // data() {
+  //   return {
+  //     list: null,
+  //     answer: null,
+  //     comment: [],
+  //   };
+  // },
   
-  async mounted() {
-    try {
-      const res = await axios.get(
-        `http://localhost:8000/api/question-answer-list/${this.$route.params.id}/`
-      );
-      console.log(res.data);
-      this.list = res?.data;
-    } catch (err) {
-      console.log("err", err);
-    }
-  },
-  methods: {
-    async onSubmit() {
-      try {
-        const res = await axios.post("http://localhost:8000/api/post-answer", {
-          answer: this.answer,
-          question_id: this.list.question.id,
-          user_id: this.list.question.user_id,
-        });
-        this.list = res?.data;
-        this.answer = null;
-      } catch (err) {
-        console.log("err", err);
-      }
-      // this.answer=null;
-    },
-    async onSubmitComment(answer_id, index) {
-      try {
-        const res = await axios.post("http://localhost:8000/api/post-comment", {
-          comment: this.comment[index],
-          answer_id,
-          user_id: this.list.question.user_id,
-          question_id: this.list.question.id,
-        });
-        this.list = res?.data;
-        delete this.comment[index]
-      } catch (err) {
-        console.log("err", err);
-      }
-    },
-  },
-
-  // setup(){
-  //   const list = ref(null);
-  //   const answer = ref(null);
-  //   const comment = ref([]);
-
-  //   onMounted(async ()=>{
-  //     try {
-  //       const res = await axios.get(
+  // async mounted() {
+  //   try {
+  //     const res = await axios.get(
   //       `http://localhost:8000/api/question-answer-list/${this.$route.params.id}/`
   //     );
-  //       console.log(res.data);
-  //       list.value = res?.data;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //     }
-  //   });
-
-  //   const onSubmit = async () => {
-  //     try {
-  //       const res = await axios.post("http://localhost:8000/api/post-answer", {
-  //         answer: answer.value,
-  //         question_id: list.value.question.id,
-  //         user_id: list.value.question.user_id,
-  //       });
-  //       list.value = res?.data;
-  //       answer.value = null;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //     }
-  //     // answer.value=null;
-  //   };
-
-  //   const onSubmitComment = async (answer_id, index) => {
-  //     try {
-  //       const res = await axios.post("http://localhost:8000/api/post-comment", {
-  //         comment: comment.value[index],
-  //         answer_id,
-  //         user_id: list.value.question.user_id,
-  //         question_id: list.value.question.id,
-  //       });
-  //       list.value = res?.data;
-  //       delete comment.value[index]
-  //     } catch (err) {
-  //       console.log("err", err);
-  //     }
-  //   };
-
-  //   return {
-  //     list,
-  //     answer,
-  //     comment,
-  //     onSubmit,
-  //     onSubmitComment,
+  //     console.log(res.data);
+  //     this.list = res?.data;
+  //   } catch (err) {
+  //     console.log("err", err);
   //   }
   // },
+  // methods: {
+  //   async onSubmit() {
+  //     try {
+  //       const res = await axios.post("http://localhost:8000/api/post-answer", {
+  //         answer: this.answer,
+  //         question_id: this.list.question.id,
+  //         user_id: this.list.question.user_id,
+  //       });
+  //       this.list = res?.data;
+  //       this.answer = null;
+  //     } catch (err) {
+  //       console.log("err", err);
+  //     }
+  //     // this.answer=null;
+  //   },
+  //   async onSubmitComment(answer_id, index) {
+  //     try {
+  //       const res = await axios.post("http://localhost:8000/api/post-comment", {
+  //         comment: this.comment[index],
+  //         answer_id,
+  //         user_id: this.list.question.user_id,
+  //         question_id: this.list.question.id,
+  //       });
+  //       this.list = res?.data;
+  //       delete this.comment[index]
+  //     } catch (err) {
+  //       console.log("err", err);
+  //     }
+  //   },
+  // },
+
+  setup(_, ctx){
+    const list = ref(null);
+    const answer = ref(null);
+    const comment = ref([]);
+
+    onMounted(async ()=>{
+      try {
+        const res = await axios.get(
+        `http://localhost:8000/api/question-answer-list/${ctx.root.$route.params.id}/`
+      );
+        console.log(res.data);
+        list.value = res?.data;
+      } catch (err) {
+        console.log("err", err);
+      }
+    });
+
+    const onSubmit = async () => {
+      try {
+        const res = await axios.post("http://localhost:8000/api/post-answer", {
+          answer: answer.value,
+          question_id: list.value.question.id,
+          user_id: list.value.question.user_id,
+        });
+        list.value = res?.data;
+        answer.value = null;
+      } catch (err) {
+        console.log("err", err);
+      }
+      // answer.value=null;
+    };
+
+    const onSubmitComment = async (answer_id, index) => {
+      try {
+        const res = await axios.post("http://localhost:8000/api/post-comment", {
+          comment: comment.value[index],
+          answer_id,
+          user_id: list.value.question.user_id,
+          question_id: list.value.question.id,
+        });
+        list.value = res?.data;
+        delete comment.value[index]
+      } catch (err) {
+        console.log("err", err);
+      }
+    };
+
+    return {
+      list,
+      answer,
+      comment,
+      onSubmit,
+      onSubmitComment,
+    }
+  },
 };
 </script>
