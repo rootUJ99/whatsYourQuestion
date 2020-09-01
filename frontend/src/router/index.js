@@ -15,6 +15,8 @@ const router = createRouter({
       path: '/detail/:id',
       name: 'detail',
       component: Detail,
+      props: (route) => {console.log(route.params.id)}
+
     },
   ]
 })

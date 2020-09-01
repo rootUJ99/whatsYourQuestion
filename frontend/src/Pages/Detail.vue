@@ -37,10 +37,12 @@
 </style>
 <script>
 import axios from "axios";
-import {} from 'vue-router';
 import {ref, onMounted} from 'vue';
 export default {
   name: "Question",
+  props:{
+    questionId,
+  },
   // data() {
   //   return {
   //     list: null,
@@ -91,15 +93,18 @@ export default {
   //   },
   // },
 
-  setup(_, ctx){
+  setup(props, ctx){
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
 
     onMounted(async ()=>{
       try {
+        console.log(props.questionId, 'router');
         const res = await axios.get(
-        `http://localhost:8000/api/question-answer-list/${ctx.root.$route.params.id}/`
+        `http://localhost:8000/api/question-answer-list/${1}/`
+        // const res = await axios.get(
+        // `http://localhost:8000/api/question-answer-list/${ctx.root.$route.params.id}/`
       );
         console.log(res.data);
         list.value = res?.data;
