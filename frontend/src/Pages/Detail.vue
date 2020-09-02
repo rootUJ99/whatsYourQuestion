@@ -40,9 +40,6 @@ import axios from "axios";
 import {ref, onMounted} from 'vue';
 export default {
   name: "Question",
-  props:{
-    questionId,
-  },
   // data() {
   //   return {
   //     list: null,
@@ -100,7 +97,8 @@ export default {
 
     onMounted(async ()=>{
       try {
-        console.log(props.questionId, 'router');
+        console.log(ctx.attrs.get, 'router');
+        // const new Url
         const res = await axios.get(
         `http://localhost:8000/api/question-answer-list/${1}/`
         // const res = await axios.get(
@@ -115,6 +113,7 @@ export default {
 
     const onSubmit = async () => {
       try {
+        console.log(ctx, 'router');
         const res = await axios.post("http://localhost:8000/api/post-answer", {
           answer: answer.value,
           question_id: list.value.question.id,
