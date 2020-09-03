@@ -37,8 +37,10 @@
 </style>
 <script>
 import axios from "axios";
-import {ref, onMounted} from 'vue';
-export default {
+import {ref, onMounted, defineComponent} from 'vue';
+import { useRouter } from '../hooks/use-router';
+
+export default defineComponent ({
   name: "Question",
   // data() {
   //   return {
@@ -94,10 +96,10 @@ export default {
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
-
+    const { route, router } = useRouter();
     onMounted(async ()=>{
       try {
-        console.log(ctx.attrs.get, 'router');
+        console.log(route, router, 'router');
         // const new Url
         const res = await axios.get(
         `http://localhost:8000/api/question-answer-list/${1}/`
@@ -148,7 +150,9 @@ export default {
       comment,
       onSubmit,
       onSubmitComment,
+      route,
+      router,
     }
   },
-};
+});
 </script>
