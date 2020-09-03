@@ -5,6 +5,7 @@ const routerHistory = createWebHistory()
 
 const router = createRouter({
   history: routerHistory,
+  
   routes: [
     {
       path: '/',
@@ -15,6 +16,7 @@ const router = createRouter({
       path: '/detail/:id',
       name: 'detail',
       component: Detail,
+      props: true,
     },
   ]
 })

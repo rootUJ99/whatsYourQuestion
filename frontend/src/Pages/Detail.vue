@@ -38,73 +38,18 @@
 <script>
 import axios from "axios";
 import {ref, onMounted, defineComponent} from 'vue';
-import { useRouter } from '../hooks/use-router';
 
 export default defineComponent ({
   name: "Question",
-  // data() {
-  //   return {
-  //     list: null,
-  //     answer: null,
-  //     comment: [],
-  //   };
-  // },
-  
-  // async mounted() {
-  //   try {
-  //     const res = await axios.get(
-  //       `http://localhost:8000/api/question-answer-list/${this.$route.params.id}/`
-  //     );
-  //     console.log(res.data);
-  //     this.list = res?.data;
-  //   } catch (err) {
-  //     console.log("err", err);
-  //   }
-  // },
-  // methods: {
-  //   async onSubmit() {
-  //     try {
-  //       const res = await axios.post("http://localhost:8000/api/post-answer", {
-  //         answer: this.answer,
-  //         question_id: this.list.question.id,
-  //         user_id: this.list.question.user_id,
-  //       });
-  //       this.list = res?.data;
-  //       this.answer = null;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //     }
-  //     // this.answer=null;
-  //   },
-  //   async onSubmitComment(answer_id, index) {
-  //     try {
-  //       const res = await axios.post("http://localhost:8000/api/post-comment", {
-  //         comment: this.comment[index],
-  //         answer_id,
-  //         user_id: this.list.question.user_id,
-  //         question_id: this.list.question.id,
-  //       });
-  //       this.list = res?.data;
-  //       delete this.comment[index]
-  //     } catch (err) {
-  //       console.log("err", err);
-  //     }
-  //   },
-  // },
-
+  props: ['id'],
   setup(props, ctx){
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
-    const { route, router } = useRouter();
     onMounted(async ()=>{
       try {
-        console.log(route, router, 'router');
-        // const new Url
         const res = await axios.get(
-        `http://localhost:8000/api/question-answer-list/${1}/`
-        // const res = await axios.get(
-        // `http://localhost:8000/api/question-answer-list/${ctx.root.$route.params.id}/`
+        `http://localhost:8000/api/question-answer-list/${props.id}/`
       );
         console.log(res.data);
         list.value = res?.data;
@@ -150,8 +95,6 @@ export default defineComponent ({
       comment,
       onSubmit,
       onSubmitComment,
-      route,
-      router,
     }
   },
 });
