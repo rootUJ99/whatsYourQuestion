@@ -18,23 +18,33 @@
         <div class="card_list" v-for="q in questions" :key="q.id">
           {{ q.username }}
           <li>
-            <a href="#" class="anchor_decoration">
+            <div class="card_text" @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false">
               {{ q.question }}
-            </a>
+            </div>
           </li>
         </div>
       </ul>
     </div>
   </div>
 </template>
+<style scoped>
+  .card_text {
+    text-decoration: none;
+    color: gray;
+    outline: none;
+    cursor: pointer;
+  }
+</style>
 <script>
 import axios from "axios";
-import { ref, reactive, onMounted, defineComponent } from "vue";
+import { ref, onMounted, defineComponent } from "vue";
+import { useRouter} from 'vue-router';
 export default defineComponent ({
   name: "Home",
   // setup() {
   //   const question = ref(null);
-  //   const questions = ref(null)
+  //   const questions = ref(null);
+  //   const route = useRouter();
   //   onMounted(async () => {
   //     try {
   //       const res = await axios.get("http://localhost:8000/api/question-list");
@@ -46,7 +56,7 @@ export default defineComponent ({
   //   });
 
   //   const getDataFromParam = (id) => {
-  //     // this.$router.push({ name: 'detail', params: {id}})
+  //     router.push({ name: 'detail', params: {id}})
   //   };
   //   const onSubmitQuestion = async () => {
   //     try {
@@ -73,7 +83,7 @@ export default defineComponent ({
   data: function(){
     return {
       questions: null,
-      qestion: null,
+      question: null,
     }
   },
   async mounted() {
