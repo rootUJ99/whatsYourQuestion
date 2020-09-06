@@ -8,10 +8,10 @@
       autocomplete="off"
       @input="handleSearch($event.target.value)"
     />
-    <div class="list_searched">
+    <div class="list_searched" v-if="searchedList">
       <ul class="remove_bullet">
         <li v-for="item in searchedList" :key="item.question">
-          <a href="#" class="anchor_decoration">{{ item.question }}</a>
+          <button class="link_button" @click="handleSearchClick(item.id)">{{item.question}}</button>
         </li>
       </ul>
     </div>
@@ -36,30 +36,39 @@
   position: absolute;
   z-index: 6;
   top: 3rem;
-  display: none;
   background: white;
-  width: 400px;
+  width: 15rem;
 }
-.search_container:hover .list_searched {
-  display: block;
+.link_button {
+  border: none;
+  outline: none;
+  background: transparent;
 }
 </style>
 <script>
 import axios from "axios";
 import { ref, computed, watch, onMounted } from "vue";
-
+import { useRouter } from "vue-router";
 export default {
   name: "Search",
   setup() {
     const searchedList = ref(null);
+    const router = useRouter();
     const handleSearch = async (value) => {
-      console.log("value", value);
       const res = await axios(`http://localhost:8000/search/${value}`);
       searchedList.value = res?.data?.searched;
     };
+    const handleSearchClick = (id) => {
+      router.push({
+            name: 'detail', 
+            params: { id }
+          });
+      searchedList.value=null
+    }
     return {
       searchedList,
       handleSearch,
+      handleSearchClick,
     };
   },
 };

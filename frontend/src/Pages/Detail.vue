@@ -37,7 +37,7 @@
 </style>
 <script>
 import axios from "axios";
-import {ref, onMounted, defineComponent} from 'vue';
+import {ref, onMounted, watchEffect, defineComponent} from 'vue';
 
 export default defineComponent ({
   name: "Question",
@@ -46,7 +46,7 @@ export default defineComponent ({
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
-    onMounted(async ()=>{
+    const getDetails = async ()=>{
       try {
         const res = await axios.get(
         `http://localhost:8000/api/question-answer-list/${props.id}/`
@@ -56,8 +56,9 @@ export default defineComponent ({
       } catch (err) {
         console.log("err", err);
       }
-    });
-
+    }
+    // onMounted(getDetails);
+    watchEffect(getDetails);
     const onSubmit = async () => {
       try {
         console.log(ctx, 'router');
