@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('qaplatform.urls')),
     path('uaa/', include('qaauth.urls')),
     path('api/', include('qarest.urls')),
+    path('api/auth/', include('qarest_auth.urls')),
     path('admin/', admin.site.urls),
 ]
