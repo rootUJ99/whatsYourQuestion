@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -28,8 +29,18 @@ def login(request):
     return Response({'token': token.key},
                     status=HTTP_200_OK)
 
-# @csrf_exempt
-# @api_view(["POST"])
-# @permission_classes((AllowAny,))
-# def register(request):
 
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def register(request):
+    email = request.data.get("email")
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None or email is None:
+        return Response({'error': 'Please Enter the registration details'},
+                        status=HTTP_400_BAD_REQUEST)
+    user = User.objects.create_user(username=username, email=email, password=password)
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=HTTP_200_OK)
