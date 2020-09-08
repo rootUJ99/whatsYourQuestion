@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import Search from './Search.vue';
 
-import { getToken, removeToken } from '../utils';
+import { getToken, removeToken, } from '../utils';
 export default {
   name: 'Header',
   components: {
@@ -32,13 +32,14 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const token = ref(getToken());
+    watchEffect(()=>token.value)
     const handleLogin = () => {
       router.push('auth');
     }
     const handleLogout = () => {
       removeToken();
     }
-    const token = ref(getToken());
     return {
       token,
       handleLogin,
