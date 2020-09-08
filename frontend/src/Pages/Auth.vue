@@ -5,7 +5,7 @@
         <input class="form_input" name="username" type="text" placeholder="UserName" v-model="login.username"/>
         <input class="form_input" name="password" type="password" placeholder="Password" v-model="login.password"/>
         <button type="submit" class="ask_button" @click="handleLogin">Login</button>
-        <button @click="handleChange(REGISTER)">or register</button>
+        <button class="secondry_button" @click="handleChange(REGISTER)">or register</button>
       </div>
       <div v-if="authType===REGISTER" class="card form_box">
         Register
@@ -14,11 +14,17 @@
         <input class="form_input" name="password" type="password" placeholder="Password" v-model="register.password"/>
         <input class="form_input" name="password2" type="password" placeholder="Confirm Password" v-model="register.password2"/>
         <button type="submit" class="ask_button">Register</button>
-        <button @click="handleChange(LOGIN)">or Login</button>
+        <button class="secondry_button" @click="handleChange(LOGIN)">or Login</button>
       </div>
   </div>
 </template>
 <style scoped>
+  .secondry_button {
+    background: white;
+    padding: 0.5rem;
+    border: 0.1rem solid gray;
+    border-radius: 0.2rem;
+  }
 </style>
 <script>
 import axios from 'axios';

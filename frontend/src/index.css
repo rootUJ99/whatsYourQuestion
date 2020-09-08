@@ -25,39 +25,7 @@ body {
 display: flex;
 flex-direction: column;
 }
-.headContainer {
-  width: 5rem;
-  padding: 1rem;
-  background-color: blueviolet;
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-}
-.profile-dropdown {
-position: relative;
-display: flex;
-flex-direction: row-reverse;
-}
-.profile-button {
-border-radius: 50%;
-border: 0.1rem solid white;
-background: var(--card-background);
-outline: none;
-}
-
-.dropdown-list {
-  position: absolute;
-  z-index: 5;
-  display: none;
-  top: 2rem;
-  width: 200px;
-  background: white;
-}
 .dropdown-list > a { color: black}
-.profile-dropdown:hover .dropdown-list {
-display: flex;
-flex-direction: column;
-}
 .hcenter {
 display: flex;
 justify-content: center;
