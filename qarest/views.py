@@ -4,16 +4,21 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from qaplatform.models import Question, Answer, Comment
+from rest_framework.decorators import permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import response
 import json
 
 def bodyUnicodeHelper(req):
     body_unicode = req.body.decode('utf-8')
     return json.loads(body_unicode)
-
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def question_list(request):
     print(request.method)
     question_list = list(Question.objects.all().values())
-    return JsonResponse({'questions': question_list})
+    return response({'questions': question_list})
 
 
 def question_with_answer(request, question_id):

@@ -39,6 +39,7 @@
 import axios from "axios";
 import { ref, onMounted, defineComponent } from "vue";
 import { useRouter} from 'vue-router';
+import { getToken } from "../utils";
 export default defineComponent ({
   name: "Home",
   setup() {
@@ -47,7 +48,9 @@ export default defineComponent ({
     const router = useRouter();
     onMounted(async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/question-list");
+        const res = await axios.get("http://localhost:8000/api/question-list",{
+          headers: {'Authorization': getToken()},
+        });
         questions.value = res?.data?.questions;
         console.log(questions);
       } catch (err) {
