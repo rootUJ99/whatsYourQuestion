@@ -49,7 +49,11 @@ export default defineComponent ({
     onMounted(async () => {
       try {
         const res = await axios.get("http://localhost:8000/api/question-list",{
-          headers: {'Authorization': getToken()},
+          headers: {
+            "Content-Type": "application/json",
+            'WWW-Authenticate': 'Token',
+            'Authorization': `Token ${getToken()}`
+            },
         });
         questions.value = res?.data?.questions;
         console.log(questions);
