@@ -38,6 +38,7 @@
 <script>
 import axios from "axios";
 import {ref, onMounted, watchEffect, defineComponent} from 'vue';
+import {useAxios} from '../hooks/useAxios'
 
 export default defineComponent ({
   name: "Question",
@@ -48,7 +49,7 @@ export default defineComponent ({
     const comment = ref([]);
     const getDetails = async ()=>{
       try {
-        const res = await axios.get(
+        const res = await useAxios(
         `http://localhost:8000/api/question-answer-list/${props.id}/`
       );
         console.log(res.data);
@@ -62,7 +63,7 @@ export default defineComponent ({
     const onSubmit = async () => {
       try {
         console.log(ctx, 'router');
-        const res = await axios.post("http://localhost:8000/api/post-answer", {
+        const res = await useAxios("http://localhost:8000/api/post-answer", {
           answer: answer.value,
           question_id: list.value.question.id,
           user_id: list.value.question.user_id,
@@ -77,7 +78,7 @@ export default defineComponent ({
 
     const onSubmitComment = async (answer_id, index) => {
       try {
-        const res = await axios.post("http://localhost:8000/api/post-comment", {
+        const res = await useAxios("http://localhost:8000/api/post-comment", {
           comment: comment.value[index],
           answer_id,
           user_id: list.value.question.user_id,
