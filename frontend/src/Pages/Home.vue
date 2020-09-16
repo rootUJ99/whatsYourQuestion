@@ -62,7 +62,7 @@ export default defineComponent ({
     };
     const onSubmitQuestion = async () => {
       try {
-        const res = await axios.post(
+        const res = await useAxios(
           "http://localhost:8000/api/post-question",
           {
             question: question.value,

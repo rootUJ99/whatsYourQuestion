@@ -7,7 +7,10 @@ from qaplatform.models import Question, Answer, Comment
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 import json
+import copy
+import requests
 
 def bodyUnicodeHelper(req):
     body_unicode = req.body.decode('utf-8')
@@ -46,20 +49,20 @@ def post_answer(request):
         except:
             return HttpResponseBadRequest()
 
-@csrf_exempt
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def post_question(request):
-    if request.method == 'POST':
-        try:
-            question_date = timezone.now()
-            body = bodyUnicodeHelper(request)
-            question = body['question']
-            user_id = body['user_id']
-            user = User.objects.get(pk=user_id)
-            q = Question(question=question, question_date=question_date, user=user)
-            q.save()
-            return question_list(request)
-        except:
-            return HttpResponseBadRequest()
+    try:
+        question_date = timezone.now()
+        body = request.data
+        question = body['question']
+        user_id = body['user_id']
+        user = User.objects.get(pk=user_id)
+        q = Question(question=question, question_date=question_date, user=user)
+        q.save()
+        return question_list(request)
+    except:
+        return HttpResponseBadRequest()
 
 
 @csrf_exempt
