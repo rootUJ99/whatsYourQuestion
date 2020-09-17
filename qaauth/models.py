@@ -6,8 +6,15 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    followers = models.IntegerField(default=0)
-    following = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
+class Followers(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+class Following(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=User)
@@ -17,6 +24,6 @@ def create_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
-        instance.Profile.save()
+        instance.profile.save()
 
     

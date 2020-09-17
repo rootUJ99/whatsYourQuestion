@@ -13,7 +13,7 @@
         <input class="form_input" name="username" type="text" placeholder="UserName" v-model="register.username"/>
         <input class="form_input" name="password" type="password" placeholder="Password" v-model="register.password"/>
         <input class="form_input" name="password2" type="password" placeholder="Confirm Password" v-model="register.password2"/>
-        <button type="submit" class="ask_button">Register</button>
+        <button type="submit" class="ask_button" @click="handleRegister">Register</button>
         <button class="secondry_button" @click="handleChange(LOGIN)">or Login</button>
       </div>
   </div>
@@ -49,7 +49,7 @@ export default defineComponent({
     }
     const handleLogin = async () => {
       try {
-        const res = await axios.post('http://localhost:8000/api/auth/login', {
+        const res = await axios.post('http://localhost:8000/api/auth', {
           username: login.username,
           password: login.password,
         });
@@ -61,7 +61,7 @@ export default defineComponent({
     } 
     const handleRegister = async () => {
       try {
-        const res = await axios.post('http://localhost:8000/api/auth/login', {
+        const res = await axios.post('http://localhost:8000/api/auth/register', {
           email: register.email,
           username: register.username,
           password: register.password,
@@ -78,6 +78,7 @@ export default defineComponent({
       REGISTER,
       handleChange,
       handleLogin,
+      handleRegister,
       login,
       register,
     };
