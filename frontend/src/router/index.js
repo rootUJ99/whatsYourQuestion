@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../Pages/Home.vue';
 import Detail from '../Pages/Detail.vue';
 import Auth from '../Pages/Auth.vue';
+import Profile from '../Pages/Profile.vue';
 import {getToken} from '../utils';
 const routerHistory = createWebHistory()
 
@@ -13,6 +14,11 @@ const router = createRouter({
       path: '/auth',
       name: 'auth',
       component: Auth,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
     },
     {
       path: '/',

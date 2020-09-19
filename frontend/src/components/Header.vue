@@ -8,6 +8,7 @@
         </span>
       </button>
       <div class="dropdown-list" v-if="toggle===true && token">
+        <button class="dropdown-button" @click="handleProfile">Profile</button>
         <button class="dropdown-button" @click="handleLogout">Sign Out</button>
       </div>
       <div class="dropdown-list" v-if="toggle===true && token===null">
@@ -80,7 +81,6 @@ export default {
     const toggle = ref(false);
     const token = ref(getToken());
     const handleToggle = () => {
-      console.log('man you are pushing it hard')
       toggle.value = !toggle.value
     }
     const handleLogin = () => {
@@ -88,6 +88,9 @@ export default {
     }
     const handleLogout = () => {
       removeToken();
+    }
+    const handleProfile = () => {
+      router.push('profile');
     }
     return {
       token,
