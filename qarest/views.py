@@ -20,7 +20,6 @@ def bodyUnicodeHelper(req):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def question_list(request):
-    print(request.method)
     question_list = list(Question.objects.all().values())
     return Response({'questions': question_list})
 
@@ -85,5 +84,19 @@ def post_comment(request):
         c.save()
         r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
         return Response(r)
+    except:
+        return HttpResponseBadRequest()
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_question_answer(request, user_id):
+    try: 
+        user_questions = list(Question.objects.filter(user=user_id).values())
+        user_answers = list(Answer.objects.filter(user=user_id).values())
+        return Response({
+            'questions': user_questions,
+            'answers': user_answers
+            })
     except:
         return HttpResponseBadRequest()
