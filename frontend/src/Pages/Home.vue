@@ -15,14 +15,14 @@
     </div>
     <div class="hcenter">
       <ul class="remove_bullet">
-        <div class="card_list" v-for="q in questions" :key="q.id">
-          {{ q.username }}
+        <Card class="card_list" v-for="q in questions" :key="q.id" v-bind:body="q.question"/>
+          <!-- {{ q.username }}
           <li>
             <div class="card_text" @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false">
               {{ q.question }}
             </div>
           </li>
-        </div>
+        </Card> -->
       </ul>
     </div>
   </div>
@@ -41,8 +41,12 @@ import { ref, onMounted, defineComponent } from "vue";
 import { useRouter} from 'vue-router';
 import { useAxios } from '../hooks/useAxios';
 import { getToken } from "../utils";
+import Card from '../components/Card.vue';
 export default defineComponent ({
   name: "Home",
+  components: {
+    Card,
+  },
   setup() {
     const question = ref(null);
     const questions = ref(null);
