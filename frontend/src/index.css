@@ -2,6 +2,9 @@
   --font-color: white;
   --primary-color: blueviolet;
   --card-background: #F6F6F6;
+  --background: #2F3C45;
+  --accent: #57AEFF;
+  --primary: #394C60;
 }
 
 html {
@@ -19,7 +22,7 @@ body {
  font-family: 'Source Sans Pro', sans-serif;
  font-size: clamp(1rem, 1vw, 2rem); 
  margin: 0;
-
+ background:var(--background);
 }
 .flex_column{
 display: flex;

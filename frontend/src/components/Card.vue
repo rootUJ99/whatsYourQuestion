@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div>
-      {{body}}
+      <slot/>
     </div>
   </div>
 </template>
@@ -19,8 +19,8 @@ export default defineComponent({
 </script>
 <style scoped>
   .card {
-    background: #394C60;
-    padding: 10% 7%;
+    background: var(--primary);
+    padding: 3rem 3rem;
     color: #ffffff;
     border-radius: 0.5rem;
   }

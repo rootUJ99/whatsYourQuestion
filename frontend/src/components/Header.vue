@@ -23,10 +23,14 @@
   .headContainer {
     width: 5rem;
     padding: 1rem;
-    background-color: blueviolet;
+    background-color: var(--primary);
     width: 100%;
     display: flex;
     flex-direction: row-reverse;
+    margin-bottom: 2rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    position: sticky;
   }
   .profile-dropdown {
     position: relative;

@@ -1,27 +1,28 @@
 <template>
   <div>
     <div class="hcenter">
-      <div class="card">
-        <p>Be curious ask Questions</p>
-        <input
-          name="input_question"
-          class="input_question"
-          v-model="question"
-        />
-        <button type="submit" class="ask_button" @click="onSubmitQuestion">
-          Ask
-        </button>
-      </div>
+      <Card>
+        <div>
+          <p>Be curious ask Questions</p>
+          <input
+            name="input_question"
+            class="input_question"
+            v-model="question"
+          />
+          <button type="submit" class="ask_button" @click="onSubmitQuestion">
+            Ask
+          </button>
+        </div>
+      </Card>
     </div>
     <div class="hcenter">
       <ul class="remove_bullet">
-        <Card class="card_list" v-for="q in questions" :key="q.id" v-bind:body="q.question"/>
-          <!-- {{ q.username }}
-          <li>
-            <div class="card_text" @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false">
+        <Card class="card_list" v-for="q in questions" :key="q.id">
+          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false">
               {{ q.question }}
             </div>
-          </li>
+        </Card>
+          <!-- {{ q.username }}
         </Card> -->
       </ul>
     </div>

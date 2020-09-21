@@ -1,11 +1,12 @@
 <template>
   <div class="hcenter">
     <div class="flex_column">
-      <div class="card_list">
+      <Card class="card_list">
         {{ list?.question?.question }}
-      </div>
+      </Card>
       <div v-if="list?.answers?.length">
-        <div v-for="(a,index) in list?.answers" class="card_list" :key="a.id">
+        <Card v-for="(a,index) in list?.answers" class="card_list" :key="a.id">
+          <div>
           <p>{{ a.answer }}</p>
           <div v-if="a.comment.length">
             <div v-for="c in a.comment" :key="c.id">
@@ -19,12 +20,13 @@
           <button class="answer_button" @click="onSubmitComment(a.id, index)">
             Comment
           </button>
-        </div>
+          </div>
+        </Card>
       </div>
-      <div class="card_list">
+      <Card class="card_list">
         <textarea class="input_answer" name="answer" v-model="answer" />
         <button class="answer_button" @click="onSubmit">Answer</button>
-      </div>
+      </Card>
     </div>
   </div>
 </template>
@@ -39,10 +41,14 @@
 import axios from "axios";
 import {ref, onMounted, watchEffect, defineComponent} from 'vue';
 import {useAxios} from '../hooks/useAxios'
+import Card from '../components/Card.vue';
 
 export default defineComponent ({
   name: "Question",
   props: ['id'],
+  components: {
+    Card,
+  },
   setup(props, ctx){
     const list = ref(null);
     const answer = ref(null);
