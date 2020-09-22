@@ -2,11 +2,11 @@
   <div>
     <div class="hcenter">
       <Card>
-        <div>
-          <p>Be curious ask Questions</p>
+        <p>Be curious ask Questions</p>
+        <div class="flex_wrapper">
           <Input
             name="input_question"
-            class="input_question"
+            placeholder="What is speed of light??"
             v-model="question"
           />
           <Button @handleClick="onSubmitQuestion">
@@ -18,7 +18,7 @@
     <div class="hcenter">
       <ul class="remove_bullet">
         <Card class="card_list" v-for="q in questions" :key="q.id">
-          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false">
+          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card_text">
               {{ q.question }}
             </div>
         </Card>
@@ -31,9 +31,14 @@
 <style scoped>
   .card_text {
     text-decoration: none;
-    color: gray;
     outline: none;
     cursor: pointer;
+  }
+  .flex_wrapper {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0.5rem 0;
   }
 </style>
 <script>

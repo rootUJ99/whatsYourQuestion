@@ -26,6 +26,6 @@ export default defineComponent({
     background: var(--accent);
     color: var(--font-color);
     border: none;
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
   }
 </style>
