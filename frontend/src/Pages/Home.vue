@@ -4,14 +4,14 @@
       <Card>
         <div>
           <p>Be curious ask Questions</p>
-          <input
+          <Input
             name="input_question"
             class="input_question"
             v-model="question"
           />
-          <button type="submit" class="ask_button" @click="onSubmitQuestion">
+          <Button @handleClick="onSubmitQuestion">
             Ask
-          </button>
+          </Button>
         </div>
       </Card>
     </div>
@@ -43,15 +43,20 @@ import { useRouter} from 'vue-router';
 import { useAxios } from '../hooks/useAxios';
 import { getToken } from "../utils";
 import Card from '../components/Card.vue';
+import Button from '../components/Button.vue'
+import Input from '../components/Input.vue'
 export default defineComponent ({
   name: "Home",
   components: {
     Card,
+    Button,
+    Input,
   },
   setup() {
     const question = ref(null);
     const questions = ref(null);
     const router = useRouter();
+    // console.log('this is changing fuck yeah', question);
     onMounted(async () => {
       try {
         const res = await useAxios("http://localhost:8000/api/question-list");

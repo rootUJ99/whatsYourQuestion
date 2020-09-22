@@ -17,15 +17,15 @@
             </div>
           </div>
           <textarea class="input_answer" name="comment" v-model="comment[index]" />
-          <button class="answer_button" @click="onSubmitComment(a.id, index)">
+          <Button @handleClick="onSubmitComment(a.id, index)">
             Comment
-          </button>
+          </Button>
           </div>
         </Card>
       </div>
       <Card class="card_list">
         <textarea class="input_answer" name="answer" v-model="answer" />
-        <button class="answer_button" @click="onSubmit">Answer</button>
+        <Button @handleClick="onSubmit">Answer</Button>
       </Card>
     </div>
   </div>
@@ -42,12 +42,14 @@ import axios from "axios";
 import {ref, onMounted, watchEffect, defineComponent} from 'vue';
 import {useAxios} from '../hooks/useAxios'
 import Card from '../components/Card.vue';
+import Button from '../components/Button.vue';
 
 export default defineComponent ({
   name: "Question",
   props: ['id'],
   components: {
     Card,
+    Button,
   },
   setup(props, ctx){
     const list = ref(null);
