@@ -1,21 +1,25 @@
 <template>
   <div class="hcenter">
-      <div v-if="authType===LOGIN" class="card form_box">
-        Login
-        <input class="form_input" name="username" type="text" placeholder="UserName" v-model="login.username"/>
-        <input class="form_input" name="password" type="password" placeholder="Password" v-model="login.password"/>
-        <button type="submit" class="ask_button" @click="handleLogin">Login</button>
-        <button class="secondry_button" @click="handleChange(REGISTER)">or register</button>
-      </div>
-      <div v-if="authType===REGISTER" class="card form_box">
-        Register
-        <input class="form_input" name="email" type="text"  placeholder="Email" v-model="register.email"/>
-        <input class="form_input" name="username" type="text" placeholder="UserName" v-model="register.username"/>
-        <input class="form_input" name="password" type="password" placeholder="Password" v-model="register.password"/>
-        <input class="form_input" name="password2" type="password" placeholder="Confirm Password" v-model="register.password2"/>
-        <button type="submit" class="ask_button" @click="handleRegister">Register</button>
-        <button class="secondry_button" @click="handleChange(LOGIN)">or Login</button>
-      </div>
+      <Card v-if="authType===LOGIN" class="card_width">
+        <div class="form_box">
+          Login
+          <Input name="username" type="text" placeholder="UserName" v-model="login.username"/>
+          <Input name="password" type="password" placeholder="Password" v-model="login.password"/>
+          <Button @handleClick="handleLogin">Login</Button>
+          <Button @handleClick="handleChange(REGISTER)">or register</Button>
+        </div>
+      </Card>
+      <Card v-if="authType===REGISTER" class="card_width">
+        <div class="form_box">
+          Register
+          <Input name="email" type="text"  placeholder="Email" v-model="register.email"/>
+          <Input name="username" type="text" placeholder="UserName" v-model="register.username"/>
+          <Input name="password" type="password" placeholder="Password" v-model="register.password"/>
+          <Input name="password2" type="password" placeholder="Confirm Password" v-model="register.password2"/>
+          <Button @handleClick="handleRegister">Register</Button>
+          <Button @handleClick="handleChange(LOGIN)">or Login</Button>
+        </div>
+      </Card>
   </div>
 </template>
 <style scoped>
@@ -25,13 +29,33 @@
     border: 0.1rem solid gray;
     border-radius: 0.2rem;
   }
+  .card_width {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+  }
+  .form_box {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-gap: 0.5rem;
+    width: 20rem;
+}
 </style>
 <script>
 import axios from 'axios';
 import { defineComponent, ref, reactive } from "vue";
 import { useRouter } from 'vue-router';
 import { setToken } from '../utils';
+import Card from '../components/Card.vue';
+import Button from '../components/Button.vue';
+import Input from '../components/Input.vue';
 export default defineComponent({
+  name: 'Auth',
+  components: {
+    Card,
+    Button,
+    Input,
+  },
   setup() {
     const LOGIN = "login";
     const REGISTER = "register";
