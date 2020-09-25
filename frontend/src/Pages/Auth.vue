@@ -3,8 +3,12 @@
       <Card v-if="authType===LOGIN" class="card_width">
         <div class="form_box">
           Login
-          <Input name="username" type="text" placeholder="UserName" v-model="login.username"/>
-          <Input name="password" type="password" placeholder="Password" v-model="login.password"/>
+          <Input name="username" type="text" placeholder="UserName" 
+          :value="login.username" @input="e => login.username = e.target.value"
+          />
+          <Input name="password" type="password" placeholder="Password"
+          :value="login.password" @input="e => login.password = e.target.value"
+          />
           <Button @handleClick="handleLogin">Login</Button>
           <Button @handleClick="handleChange(REGISTER)">or register</Button>
         </div>

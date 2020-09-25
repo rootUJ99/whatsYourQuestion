@@ -12,12 +12,12 @@ export default defineComponent({
     prop: "value",
     event: "update"
   },
-  setup: ({value}, {emit}) => {
+  setup: (props, {emit}) => {
     // const input = ref(value)
     // console.log('input');
     const change = (e) => {
-        console.log('value',value)
-        emit('update', e.target.value)
+        console.log('value',props.value)
+        emit('update', props.value)
     }
     return {
       change,
