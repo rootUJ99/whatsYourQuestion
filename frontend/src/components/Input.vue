@@ -1,7 +1,6 @@
 <template>
   <input type="text" class="input_style" :placeholder="placeholder" 
-    :value="value" 
-    @input="$emit('update:value', $event.target.value)"
+    @input="change"
   />
 </template>
 <script lang="ts">
@@ -9,20 +8,19 @@ import {defineComponent, ref} from 'vue'
 export default defineComponent({
   name: 'Input',
   props: ["value", "placeholder"],
-  // model: {
-  //   prop: "value",
-  //   event: "update"
-  // },
-  setup: (props, {emit}) => {
-    console.log('props', props);
+  model: {
+    prop: "value",
+    event: "update"
+  },
+  setup: ({value}, {emit}) => {
     // const input = ref(value)
     // console.log('input');
-    // const change = (e) => {
-    // console.log('value',value)
-    //     emit('input', value)
-    // }
+    const change = (e) => {
+        console.log('value',value)
+        emit('update', e.target.value)
+    }
     return {
-      // change,
+      change,
     }
   }
 })

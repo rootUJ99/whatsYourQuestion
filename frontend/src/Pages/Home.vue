@@ -7,7 +7,7 @@
           <Input
             name="input_question"
             placeholder="What is speed of light??"
-            v-model="question"
+            :value="question" @input="e => question = e.target.value"
           />
           <Button @handleClick="onSubmitQuestion">
             Ask

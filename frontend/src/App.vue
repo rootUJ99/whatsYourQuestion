@@ -16,10 +16,5 @@ export default {
     Home,
     Header,
   },
-  setup(props, context) {
-    onMounted(()=>{
-      console.log(props, 'and ', context);
-    })
-  }
 }
 </script>
