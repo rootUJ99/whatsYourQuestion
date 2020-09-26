@@ -2,29 +2,27 @@
   <div>
     <div class="hcenter">
       <Card>
-        <p>Be curious ask Questions</p>
-        <div class="flex_wrapper">
+        <div class="grid_wrapper">
+        <p class="header_text">Be curious ask Questions</p>
           <Input
             name="input_question"
             placeholder="What is speed of light??"
+            class="ask_input"
             :value="question" @input="e => question = e.target.value"
           />
-          <Button @handleClick="onSubmitQuestion">
+          <Button class="ask_button" 
+          @handleClick="onSubmitQuestion">
             Ask
           </Button>
         </div>
       </Card>
     </div>
-    <div class="hcenter">
-      <ul class="remove_bullet">
-        <Card class="card_list" v-for="q in questions" :key="q.id">
+    <div class="card_flex">
+        <Card class="card_list" v-for="q in questions" :key="q.id" >
           <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card_text">
               {{ q.question }}
             </div>
         </Card>
-          <!-- {{ q.username }}
-        </Card> -->
-      </ul>
     </div>
   </div>
 </template>
@@ -34,11 +32,29 @@
     outline: none;
     cursor: pointer;
   }
-  .flex_wrapper {
-    display: flex;
+  .grid_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     justify-content: center;
     width: 60%;
     margin: 0.5rem 0;
+    grid-gap: 0.3rem;
+  }
+  .header_text {
+    grid-column: 1 / 3;
+  }
+  .ask_button {
+   justify-self: start;
+   align-self: center;
+  }
+  .ask_input {
+    align-self: center;
+  }
+  .card_flex {
+    display: grid;
+    /* flex-direction: column-reverse; */
+    justify-content: center;
   }
 </style>
 <script>
@@ -61,12 +77,10 @@ export default defineComponent ({
     const question = ref(null);
     const questions = ref(null);
     const router = useRouter();
-    // console.log('this is changing fuck yeah', question);
     onMounted(async () => {
       try {
         const res = await useAxios("http://localhost:8000/api/question-list");
         questions.value = res?.data?.questions;
-        console.log(questions);
       } catch (err) {
         console.log("err", err);
       }

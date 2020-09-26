@@ -1,5 +1,8 @@
 <template>
-  <input type="text" class="input_style" :placeholder="placeholder" 
+  <input type="text" 
+  class="input_style" 
+  :class="class"
+  :placeholder="placeholder" 
     @input="change"
   />
 </template>
@@ -7,7 +10,7 @@
 import {defineComponent, ref} from 'vue'
 export default defineComponent({
   name: 'Input',
-  props: ["value", "placeholder"],
+  props: ["value", "placeholder", "class"],
   model: {
     prop: "value",
     event: "update"

@@ -1,5 +1,5 @@
 <template>
-  <button class="primary-button" @click="click()">
+  <button class="primary-button" :class="class" @click="click()">
     <slot/>
   </button>
 </template>
@@ -9,8 +9,10 @@ export default defineComponent({
   name: 'Button',
   props: {
     handleClick: Function,
+    class: String,
   },
-  setup: (_, {emit}) => {
+  setup: (props, {emit}) => {
+    console.log('props', props);
     const click =() =>{
       emit('handleClick')
     }

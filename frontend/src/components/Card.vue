@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="class">
     <div>
       <slot/>
     </div>
@@ -11,9 +11,10 @@ export default defineComponent({
   name: 'Card',
   props: {
     body: String,
+    class: String,
   },
   setup: (props) => {
-    console.log(props);
+    // console.log(props);
   }
 })
 </script>
