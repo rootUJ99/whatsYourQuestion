@@ -21,7 +21,7 @@ export default defineComponent({
 <style scoped>
   .card {
     background: var(--primary);
-    padding: 3rem 3rem;
+    padding: 2rem 2rem;
     color: #ffffff;
     border-radius: 0.5rem;
   }

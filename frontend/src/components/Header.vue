@@ -46,26 +46,22 @@
   .dropdown-list {
     position: absolute;
     z-index: 5;
-    display: none;
-    top: 2rem;
-    width: 200px;
-    background: white;
-    display: flex;
-    flex-direction: column;
-  }
-  .dropdown-list {
-    position: absolute;
-    z-index: 5;
     top: 2.5rem;
     right: 0;
     width: 8rem;
     padding: 0.5rem;
-    background: white;
+    background: var(--background);
+    border: 0.2rem solid var(--primary);
+    border-radius: 0.2rem;
+    display: flex;
+    flex-direction: column;
   }
   .dropdown-button {
-    background: white;
+    background: var(--background);
     padding: 0.2rem;
-    border: 0.1rem solid gray;
+    border: none;
+    outline: none;
+    color: var(--accent);
     border-radius: 0.2rem;
   }
 </style>
@@ -89,12 +85,15 @@ export default {
     }
     const handleLogin = () => {
       router.push('auth');
+      handleToggle();
     }
     const handleLogout = () => {
       removeToken();
+      handleToggle();
     }
     const handleProfile = () => {
       router.push('profile');
+      handleToggle();
     }
     return {
       token,
@@ -102,6 +101,7 @@ export default {
       handleLogin,
       handleLogout,
       handleToggle,
+      handleProfile,
     }
   }
 }

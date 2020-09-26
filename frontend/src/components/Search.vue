@@ -37,6 +37,8 @@
   z-index: 6;
   top: 3rem;
   background: white;
+  border: 0.1rem solid var(--accent);
+  border-radius: 0.4rem;
   width: 15rem;
 }
 .link_button {

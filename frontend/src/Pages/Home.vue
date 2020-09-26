@@ -34,27 +34,27 @@
   }
   .grid_wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0.3fr;
     grid-template-rows: 1fr 1fr;
     justify-content: center;
-    width: 60%;
-    margin: 0.5rem 0;
+    width: 100%;
+    /* margin: 0.5rem 0; */
     grid-gap: 0.3rem;
   }
   .header_text {
     grid-column: 1 / 3;
   }
   .ask_button {
-   justify-self: start;
-   align-self: center;
+    justify-self: start;
+    align-self: center;
   }
   .ask_input {
     align-self: center;
   }
   .card_flex {
     display: grid;
-    /* flex-direction: column-reverse; */
     justify-content: center;
+    margin-top: 0.5rem;
   }
 </style>
 <script>
