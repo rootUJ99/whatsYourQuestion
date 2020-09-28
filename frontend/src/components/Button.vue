@@ -11,8 +11,7 @@ export default defineComponent({
     handleClick: Function,
     class: String,
   },
-  setup: (props, {emit}) => {
-    console.log('props', props);
+  setup: (_, {emit}) => {
     const click =() =>{
       emit('handleClick')
     }
