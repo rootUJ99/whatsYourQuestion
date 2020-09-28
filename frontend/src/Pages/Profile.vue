@@ -29,6 +29,7 @@
       </Card>
     </div>
   </div>
+  <Modal :toggle="false"/>
 </template>
 
 <script>
@@ -36,13 +37,14 @@ import {defineComponent, onMounted} from 'vue';
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Link from '../components/Link.vue';
-
+import Modal from '../components/Modal.vue';
 export default defineComponent({
   name: 'Profile',
   components: {
     Card,
     Link,
     Button,
+    Modal,
   },
   setup: ()=> {
     onMounted(()=> {

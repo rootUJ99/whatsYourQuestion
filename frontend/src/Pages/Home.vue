@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="hcenter">
       <Card>
         <div class="grid_wrapper">
@@ -24,7 +23,6 @@
             </div>
         </Card>
     </div>
-  </div>
 </template>
 <style scoped>
   .card_text {

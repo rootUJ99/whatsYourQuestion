@@ -16,7 +16,13 @@
               </div>
             </div>
           </div>
-          <textarea class="input_answer" name="comment" v-model="comment[index]" />
+          <Input 
+            type="textarea" 
+            class="input_answer" 
+            name="comment" 
+            :value="comment[index]"
+            @input="e => comment[index] = e.target.value"
+           />
           <Button @handleClick="onSubmitComment(a.id, index)">
             Comment
           </Button>
@@ -24,7 +30,13 @@
         </Card>
       </div>
       <Card class="card_list">
-        <textarea class="input_answer" name="answer" v-model="answer" />
+        <Input 
+          type="textarea" 
+          class="input_answer" 
+          name="answer" 
+          :value="answer" 
+          @input="e => comment[answer] = e.target.value"
+        />
         <Button @handleClick="onSubmit">Answer</Button>
       </Card>
     </div>
@@ -43,13 +55,14 @@ import {ref, onMounted, watchEffect, defineComponent} from 'vue';
 import {useAxios} from '../hooks/useAxios'
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
-
+import Input from '../components/Input.vue';
 export default defineComponent ({
   name: "Question",
   props: ['id'],
   components: {
     Card,
     Button,
+    Input,
   },
   setup(props, ctx){
     const list = ref(null);
