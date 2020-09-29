@@ -52,7 +52,7 @@
 <script>
 import axios from "axios";
 import {ref, onMounted, watchEffect, defineComponent} from 'vue';
-import {useAxios} from '../hooks/useAxios'
+import {useAxios} from '../hooks/useAxios';
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Input from '../components/Input.vue';

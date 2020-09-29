@@ -8,5 +8,5 @@ urlpatterns = [
     path('post-answer', views.post_answer),
     path('post-question', views.post_question),
     path('post-comment', views.post_comment),
-    path('user-question-answer/<int:user_id>/', views.user_question_answer),
+    path('profile-info/<int:user_id>/', views.user_profile),
 ]

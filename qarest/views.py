@@ -12,6 +12,7 @@ from rest_framework.parsers import JSONParser
 import json
 import copy
 import requests
+from .serializers import CurrentUserSerializer 
 
 def bodyUnicodeHelper(req):
     body_unicode = req.body.decode('utf-8')
@@ -90,11 +91,14 @@ def post_comment(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def user_question_answer(request, user_id):
+def user_profile(request, user_id):
     try: 
+        user = User.objects.get(id=user_id)
+        serialized_user = CurrentUserSerializer(user)
         user_questions = list(Question.objects.filter(user=user_id).values())
         user_answers = list(Answer.objects.filter(user=user_id).values())
         return Response({
+            'user': serialized_user.data,
             'questions': user_questions,
             'answers': user_answers
             })

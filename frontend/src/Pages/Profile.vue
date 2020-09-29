@@ -15,10 +15,18 @@
     </div>
     <div class="hcenter">
     <div class="button-container container-width ">
-      <Button class="rounded-button">
+      <Button 
+        class="rounded-button"
+        :disabled="tabToggle === toggle.question"
+        @handleCLick="handleTabChange"
+        >
         Questions
       </Button>
-      <Button class="rounded-button">
+      <Button 
+        class="rounded-button" 
+        :disabled="tabToggle === toggle.answer"
+        @handleCLick="handleTabChange"
+      >
         Answers
       </Button>
     </div>
@@ -33,11 +41,15 @@
 </template>
 
 <script>
-import {defineComponent, onMounted} from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import { useAxios } from '../hooks/useAxios';
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Link from '../components/Link.vue';
 import Modal from '../components/Modal.vue';
+
+
+
 export default defineComponent({
   name: 'Profile',
   components: {
@@ -47,8 +59,20 @@ export default defineComponent({
     Modal,
   },
   setup: ()=> {
-    onMounted(()=> {
-      console.log('holla molla boy');
+    const toggle = {
+    question: 'QUESTION',
+    answer: 'ANSWER',
+    }
+    const profileData = ref(null);
+    const tabToggle = ref(toggle.question);
+    onMounted(async () => {
+      try {
+        const res = await useAxios('http://localhost:8000/api/profile-info/1');
+        console.log(res?.data);
+        profileData.value = res?.data;
+      } catch (err){
+        console.log("err", err);
+      }
     })
     const handleFollowing = () => {
       // modal open code
@@ -58,9 +82,21 @@ export default defineComponent({
       // modal open code
       console.log('yeaher you are a follower');
     }
+    const handleTabChange = () => {
+      if (tabToggle.value === toggle.question) {
+        tabToggle.value = toggle.answer;
+      } else {
+        tabToggle.value = toggle.question;
+      }
+      console.log(tabToggle.value)
+    }
     return {
       handleFollowing,
       handleFollower,
+      profileData,
+      handleTabChange,
+      toggle,
+      tabToggle,
     }
   }
 })
