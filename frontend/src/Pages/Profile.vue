@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="hcenter">
-      <div class="profile-grid container-width">
+      <div class="container-width profile-grid">
         <img src="../assets/profile.webp" class="profile-picture"/>
         <Card class="profile-card">
             <div class="profile-subgrid">
@@ -106,21 +106,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  .profile-picture {
-    grid-row: 1/3;
-    grid-column: 1/2;
-    width: 12rem;
-    height: 12rem;
-  }
-   @media (max-width: 600px){
-    .profile-picture {
-        width: 8rem;
-        height: 8rem;
-      }
-    .container-width {
-        width: 100%;
-    }
-  }
   .profile-grid {
     display: grid;
     height: 20%;
@@ -128,11 +113,44 @@ export default defineComponent({
     grid-template-rows: 1fr 0.5fr;
     grid-gap: 0.5rem;
   }
+
+  .profile-picture {
+    grid-row: 1/3;
+    grid-column: 1/2;
+    width: 12rem;
+    height: 12rem;
+  }
+
   .profile-card {
     width: 100%;
     grid-row: 1/3;
     grid-column: 2/4;
   }
+
+   @media (max-width: 600px){
+    .profile-grid {
+      width: 100%;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    .container-width {
+        width: 100%;
+    }
+
+    .profile-picture {
+      grid-row: 1/2;
+      grid-column: 1/3;
+      justify-self: center;
+    }
+
+    .profile-card {
+      grid-row: 2/3;
+      grid-column: 1/3;
+    }
+    
+  }
+  
+  
   .profile-subgrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -148,7 +166,7 @@ export default defineComponent({
     justify-content: space-evenly;
   }
   .container-width {
-    width: 80%;
+    width: 60%;
   }
   .rounded-button {
     border-radius: 4rem;
