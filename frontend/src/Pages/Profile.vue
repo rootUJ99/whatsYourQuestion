@@ -5,7 +5,7 @@
         <img src="../assets/profile.webp" class="profile-picture"/>
         <Card class="profile-card">
             <div class="profile-subgrid">
-              <h1 class="profile-username">Ujwal Arak</h1>
+              <h1 class="profile-username">{{profileData?.user?.username}}</h1>
               <Link @handleClick="handleFollowing"> Following </Link>
               <Link @handleClick="handleFollower"> Follower </Link>
               <Button class="rounded-button">Follow</Button>
@@ -18,22 +18,27 @@
       <Button 
         class="rounded-button"
         :disabled="tabToggle === toggle.question"
-        @handleCLick="handleTabChange"
+        @handleClick="handleTabChange"
         >
         Questions
       </Button>
       <Button 
         class="rounded-button" 
         :disabled="tabToggle === toggle.answer"
-        @handleCLick="handleTabChange"
+        @handleClick="handleTabChange"
       >
         Answers
       </Button>
     </div>
     </div>
-    <div class="hcenter">
-      <Card>
-        Holla molla cholla
+    <div v-if="tabToggle === toggle.question" class="card-flex">
+      <Card class="catd-item" v-for="q in profileData?.questions" :key="q.id">
+        {{q.question}}
+      </Card>
+    </div>
+    <div v-if="tabToggle === toggle.answer" class="card-flex">
+      <Card class="catd-item"  v-for="a in profileData?.answers" :key="a.id">
+        {{a.answer}}
       </Card>
     </div>
   </div>
@@ -47,8 +52,6 @@ import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Link from '../components/Link.vue';
 import Modal from '../components/Modal.vue';
-
-
 
 export default defineComponent({
   name: 'Profile',
@@ -83,12 +86,12 @@ export default defineComponent({
       console.log('yeaher you are a follower');
     }
     const handleTabChange = () => {
+      console.log(tabToggle.value)
       if (tabToggle.value === toggle.question) {
         tabToggle.value = toggle.answer;
       } else {
         tabToggle.value = toggle.question;
       }
-      console.log(tabToggle.value)
     }
     return {
       handleFollowing,
@@ -150,5 +153,15 @@ export default defineComponent({
   .rounded-button {
     border-radius: 4rem;
     outline: none;
+  }
+  .card-flex{
+    display: grid;
+    width: 100%;
+    grid-gap: 0.5rem;
+    justify-content: center;
+  }
+  .catd-item {
+    justify-self: center;
+    width: 100%;
   }
 </style>

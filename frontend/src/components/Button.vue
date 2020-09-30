@@ -31,4 +31,8 @@ export default defineComponent({
     border: none;
     border-radius: 0.4rem;
   }
+  .primary-button:disabled{
+    background: #667d8a;
+    color: #f0f0f0;
+  }
 </style>
