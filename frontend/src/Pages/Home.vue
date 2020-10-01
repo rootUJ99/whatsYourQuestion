@@ -1,36 +1,36 @@
 <template>
     <div class="hcenter">
       <Card>
-        <div class="grid_wrapper">
-        <p class="header_text">Be curious ask Questions</p>
+        <div class="grid-wrapper">
+        <p class="header-text">Be curious ask Questions</p>
           <Input
             name="input_question"
             placeholder="What is speed of light??"
-            class="ask_input"
+            class="ask-input"
             :value="question" @input="e => question = e.target.value"
           />
-          <Button class="ask_button" 
+          <Button class="ask-button" 
           @handleClick="onSubmitQuestion">
             Ask
           </Button>
         </div>
       </Card>
     </div>
-    <div class="card_flex">
+    <div class="card-flex">
         <Card class="card_list" v-for="q in questions" :key="q.id" >
-          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card_text">
+          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card-text">
               {{ q.question }}
             </div>
         </Card>
     </div>
 </template>
 <style scoped>
-  .card_text {
+  .card-text {
     text-decoration: none;
     outline: none;
     cursor: pointer;
   }
-  .grid_wrapper {
+  .grid-wrapper {
     display: grid;
     grid-template-columns: 1fr 0.3fr;
     grid-template-rows: 1fr 1fr;
@@ -39,17 +39,17 @@
     /* margin: 0.5rem 0; */
     grid-gap: 0.3rem;
   }
-  .header_text {
+  .header-text {
     grid-column: 1 / 3;
   }
-  .ask_button {
+  .ask-button {
     justify-self: start;
     align-self: center;
   }
-  .ask_input {
+  .ask-input {
     align-self: center;
   }
-  .card_flex {
+  .card-flex {
     display: grid;
     justify-content: center;
     margin-top: 0.5rem;

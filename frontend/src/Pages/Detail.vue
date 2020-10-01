@@ -10,7 +10,7 @@
           <p>{{ a.answer }}</p>
           <div v-if="a.comment.length">
             <div v-for="c in a.comment" :key="c.id">
-              <div class="comment_container">
+              <div class="comment-container">
                 <div class="veritcal_hr" />
                 {{ c.comment }}
               </div>
@@ -43,7 +43,7 @@
   </div>
 </template>
 <style scoped>
-.comment_container {
+.comment-container {
   padding: 0.7rem;
   margin: 0.5rem;
   border-left: 0.1rem solid gray;
