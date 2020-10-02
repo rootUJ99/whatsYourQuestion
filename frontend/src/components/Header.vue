@@ -84,7 +84,7 @@ export default {
       toggle.value = !toggle.value
     }
     const handleLogin = () => {
-      router.push('auth');
+      router.push({ name:'auth' });
       handleToggle();
     }
     const handleLogout = () => {
@@ -92,7 +92,7 @@ export default {
       handleToggle();
     }
     const handleProfile = () => {
-      router.push('profile');
+      router.push({ name: 'profile' });
       handleToggle();
     }
     return {
