@@ -82,7 +82,7 @@ export default defineComponent({
           password: login.password,
         });
         setToken(res?.data?.token)
-        router.push('/')
+        router.push({ name: 'home' })
       } catch(err) {
         console.log(err, 'error');
       }
