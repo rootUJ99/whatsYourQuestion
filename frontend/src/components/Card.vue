@@ -1,8 +1,7 @@
 <template>
   <div class="card" :class="class">
-    <div>
-      <slot/>
-    </div>
+    <slot name="header" />
+    <slot/>
   </div>
 </template>
 <script>

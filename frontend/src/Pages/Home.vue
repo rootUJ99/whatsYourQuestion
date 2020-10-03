@@ -18,9 +18,12 @@
     </div>
     <div class="card-flex">
         <Card class="card_list" v-for="q in questions" :key="q.id" >
-          <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card-text">
-              {{ q.question }}
-            </div>
+            <template v-slot:header>
+              <CardProfile :handleClick="()=>pushToProfile(q.user_id)" :name="q.username"/>
+            </template>
+            <div @click="getDataFromParam(q.id)" tabindex="0" role="button" aria-pressed="false" class="card-text">
+                {{ q.question }}
+              </div>
         </Card>
     </div>
 </template>
@@ -64,12 +67,14 @@ import { getToken } from "../utils";
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue'
 import Input from '../components/Input.vue'
+import CardProfile from '../components/CardProfile.vue';
 export default defineComponent ({
   name: "Home",
   components: {
     Card,
     Button,
     Input,
+    CardProfile,
   },
   setup() {
     const question = ref(null);
@@ -87,6 +92,13 @@ export default defineComponent ({
     const getDataFromParam = (id) => {
       router.push({ name: 'detail', params: {id}})
     };
+
+    const pushToProfile = (user_id) => {
+      router.push({
+        name: 'profile',
+        params: {id: user_id}
+      })
+    }
     const onSubmitQuestion = async () => {
       try {
         const res = await useAxios(
@@ -108,6 +120,7 @@ export default defineComponent ({
       questions,
       getDataFromParam,
       onSubmitQuestion,
+      pushToProfile,
     };
   },
 

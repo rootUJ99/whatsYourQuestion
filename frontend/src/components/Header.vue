@@ -90,9 +90,13 @@ export default {
     const handleLogout = () => {
       removeToken();
       handleToggle();
+      router.push({ name:'auth' });
     }
     const handleProfile = () => {
-      router.push({ name: 'profile' });
+      router.push({ 
+        name: 'profile', 
+        params: {id: 1} 
+      });
       handleToggle();
     }
     return {

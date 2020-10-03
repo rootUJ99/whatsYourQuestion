@@ -2,16 +2,23 @@
   <div class="hcenter">
     <div class="flex_column">
       <Card class="card_list">
+        <template v-slot:header>
+          <CardProfile :handleClick="()=>pushToProfile(list?.question?.user_id)" :name="list?.question?.username"/>
+        </template>
         {{ list?.question?.question }}
       </Card>
       <div v-if="list?.answers?.length">
         <Card v-for="(a,index) in list?.answers" class="card_list" :key="a.id">
+        <template v-slot:header>
+          <CardProfile :handleClick="()=>pushToProfile(a?.user_id)" :name="a?.username"/>
+        </template>
           <div>
           <p>{{ a.answer }}</p>
           <div v-if="a.comment.length">
             <div v-for="c in a.comment" :key="c.id">
               <div class="comment-container">
                 <div class="veritcal_hr" />
+                <CardProfile :handleClick="()=>pushToProfile(c?.user_id)" :name="c?.username"/>
                 {{ c.comment }}
               </div>
             </div>
@@ -51,11 +58,13 @@
 </style>
 <script>
 import axios from "axios";
-import {ref, onMounted, watchEffect, defineComponent} from 'vue';
-import {useAxios} from '../hooks/useAxios';
+import { ref, onMounted, watchEffect, defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useAxios } from '../hooks/useAxios';
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Input from '../components/Input.vue';
+import CardProfile from '../components/CardProfile.vue';
 export default defineComponent ({
   name: "Question",
   props: ['id'],
@@ -63,11 +72,21 @@ export default defineComponent ({
     Card,
     Button,
     Input,
+    CardProfile,
   },
   setup(props, ctx){
+    const router = useRouter();
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
+
+    const pushToProfile = (user_id) => {
+      router.push({
+        name: 'profile',
+        params: {id: user_id}
+      })
+    }
+
     const getDetails = async ()=>{
       try {
         const res = await useAxios(
@@ -113,6 +132,7 @@ export default defineComponent ({
     };
 
     return {
+      pushToProfile,
       list,
       answer,
       comment,
