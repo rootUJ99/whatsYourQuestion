@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
 from django.utils import timezone
 from qaplatform.models import Question, Answer, Comment
 from qaauth.models import Profile
@@ -21,7 +22,7 @@ def bodyUnicodeHelper(req):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def question_list(request):
-    question_list = list(Question.objects.all().values())
+    question_list = [{**i, 'username': User.objects.get(pk=i['user_id']).username} for i in Question.objects.all().values()]
     return Response({'questions': question_list})
 
 @api_view(['GET'])
@@ -29,9 +30,14 @@ def question_list(request):
 def question_with_answer(request, question_id):
     answers = list(Answer.objects.filter(question=question_id).values())
     answer_with_comment = [
-       {'comment': list(Comment.objects.filter(answer=ans['id']).values()), **ans} for ans in answers 
+       {
+           'comment': [{**comm, 'username': User.objects.get(pk=comm['user_id']).username} for comm in Comment.objects.filter(answer=ans['id']).values()],
+           'username': User.objects.get(pk=ans['user_id']).username,
+            **ans
+        }for ans in answers 
     ]
-    question = list(Question.objects.filter(pk=question_id).values())[0]
+    question = [{**que, 'username': User.objects.get(pk=que['user_id']).username} for que in Question.objects.filter().values()][0]
+
     return Response({'question': question, 'answers': answer_with_comment})
 
 @api_view(['POST'])

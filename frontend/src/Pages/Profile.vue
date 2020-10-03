@@ -61,7 +61,8 @@ export default defineComponent({
     Button,
     Modal,
   },
-  setup: ()=> {
+  props: ['id'],
+  setup: ({id})=> {
     const toggle = {
     question: 'QUESTION',
     answer: 'ANSWER',
@@ -70,7 +71,7 @@ export default defineComponent({
     const tabToggle = ref(toggle.question);
     onMounted(async () => {
       try {
-        const res = await useAxios('http://localhost:8000/api/profile-info/1');
+        const res = await useAxios(`http://localhost:8000/api/profile-info/${id}`);
         console.log(res?.data);
         profileData.value = res?.data;
       } catch (err){
@@ -149,7 +150,6 @@ export default defineComponent({
     }
     
   }
-  
   
   .profile-subgrid {
     display: grid;
