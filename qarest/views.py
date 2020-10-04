@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from qaplatform.models import Question, Answer, Comment
-from qaauth.models import Profile
+from qaauth.models import Profile, Followers, Following
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -13,11 +13,12 @@ from rest_framework.parsers import JSONParser
 import json
 import copy
 import requests
+from enum import Enum
 from .serializers import CurrentUserSerializer 
 
-def bodyUnicodeHelper(req):
-    body_unicode = req.body.decode('utf-8')
-    return json.loads(body_unicode)
+# class FollowUnfollow(Enum):
+#     UNFOLLOW = 'unfollow'
+#     FOLLOW = 'follow'
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -100,13 +101,45 @@ def post_comment(request):
 def user_profile(request, user_id):
     try: 
         user = User.objects.get(id=user_id)
+        followers = list(Followers.objects.filter(profile=user_id).values())
+        following = list(Following.objects.filter(profile=user_id).values())
         serialized_user = CurrentUserSerializer(user)
         user_questions = list(Question.objects.filter(user=user_id).values())
         user_answers = list(Answer.objects.filter(user=user_id).values())
         return Response({
             'user': serialized_user.data,
             'questions': user_questions,
-            'answers': user_answers
+            'answers': user_answers,
+            'followers': followers,
+            'following': following,
             })
+    except:
+        return HttpResponseBadRequest()
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def follow_unfollow(request):
+    try:
+        flag, user_id = request.data.values()
+        if flag == 'FOLLOW' and request.auth['user_id'] != user_id:
+            current_user = Profile.objects.get(pk=user_id) 
+            loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
+            Followers(profile=loggedin_user).save()
+            Following(profile=current_user).save()
+            return Response({
+                'status': 'OK',
+            })
+
+        if flag == 'UNFOLLOW' and request.auth['user_id'] != user_id:
+            current_user = Profile.objects.get(pk=user_id) 
+            loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
+            Followers(profile=loggedin_user).delete()
+            Following(profile=current_user).delete()
+            return Response({
+                'status': 'OK',
+            })
+            
+        
     except:
         return HttpResponseBadRequest()

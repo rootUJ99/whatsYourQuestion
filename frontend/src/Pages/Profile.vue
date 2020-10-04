@@ -8,7 +8,7 @@
               <h1 class="profile-username">{{profileData?.user?.username}}</h1>
               <Link @handleClick="handleFollowing"> Following </Link>
               <Link @handleClick="handleFollower"> Follower </Link>
-              <Button class="rounded-button">Follow</Button>
+              <Button v-if="getUserData()?.user_id != profileData?.user?.id"  class="rounded-button">Follow</Button>
             </div>
         </Card>
       </div>
@@ -52,7 +52,7 @@ import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import Link from '../components/Link.vue';
 import Modal from '../components/Modal.vue';
-
+import { getUserData } from '../utils';
 export default defineComponent({
   name: 'Profile',
   components: {
@@ -101,6 +101,7 @@ export default defineComponent({
       handleTabChange,
       toggle,
       tabToggle,
+      getUserData,
     }
   }
 })

@@ -10,6 +10,8 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import CustomTokenObtainPairSerializer
 
 
 @csrf_exempt
@@ -25,9 +27,13 @@ def login(request):
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
-    token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},
-                    status=HTTP_200_OK)
+    token = CustomTokenObtainPairSerializer(user).get_token(user)
+    
+    # token, _ = Token.objects.get_or_create(user=user)
+    return Response({
+        'token': str(token.access_token),
+        'refreshToken': str(token),
+        }, status=HTTP_200_OK)
 
 
 @csrf_exempt
@@ -41,6 +47,8 @@ def register(request):
         return Response({'error': 'Please Enter the registration details'},
                         status=HTTP_400_BAD_REQUEST)
     user = User.objects.create_user(username=username, email=email, password=password)
-    token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},
-                    status=HTTP_200_OK)
+    token = CustomTokenObtainPairSerializer(user).get_token(user)
+    return Response({
+        'token': str(token.access_token),
+        'refreshToken': str(token),
+        }, status=HTTP_200_OK)
