@@ -1,0 +1,8 @@
+django-cors-headers<4.0.0,>=3.4.0
+django<4.0.0,>=3.0.4
+djangorestframework<4.0.0,>=3.11.1
+djangorestframework_simplejwt<5.0.0,>=4.4.0
+gunicorn<21.0.0,>=20.0.4
+psycopg2<3.0.0,>=2.8.4
+python-dotenv<0.15.0,>=0.14.0
+requests<3.0.0,>=2.24.0

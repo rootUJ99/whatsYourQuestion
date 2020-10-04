@@ -7,7 +7,7 @@ export const useAxios = async (url, data) => {
   const axiosConfig = {
     method: checkIfdata(data) ? 'POST': 'GET',
     url,
-    headers: { 'Authorization': `Token ${getToken()}` },
+    headers: { 'Authorization': `Bearer ${getToken()}` },
     ...(checkIfdata(data) ? {data} : {})
   }
   try {

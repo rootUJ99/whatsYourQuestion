@@ -27,7 +27,7 @@ description = ""
 authors = ["Ujwal <ujwal99arak@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "3.7"
 django = "^3.0.4"
 psycopg2 = "^2.8.4"
 gunicorn = "^20.0.4"
@@ -35,6 +35,7 @@ python-dotenv = "^0.14.0"
 django-cors-headers = "^3.4.0"
 djangorestframework = "^3.11.1"
 requests = "^2.24.0"
+djangorestframework_simplejwt = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.3"
