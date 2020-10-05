@@ -10,11 +10,14 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username}'
 
-class Followers(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+# class Follower(models.Model):
+#     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
-class Following(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+class UserFollowing(models.Model):
+    profile = models.ForeignKey(Profile, related_name="following", on_delete=models.CASCADE)
+    profile_following = models.ForeignKey(Profile, related_name="followers", on_delete=models.CASCADE)
+    class Meta:
+        unique_together = ("profile", "profile_following")
 
 
 @receiver(post_save, sender=User)
