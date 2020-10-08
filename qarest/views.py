@@ -101,7 +101,9 @@ def post_comment(request):
 def user_profile(request, user_id):
     try: 
         user = User.objects.get(id=user_id)
-        userFollowing = list(UserFollowing.objects.filter(profile=user_id).values())
+        profile = Profile.objects.get(pk=user_id)
+        following = list(profile.following.all().values())
+        follower = list(profile.followers.all().values())
         serialized_user = CurrentUserSerializer(user)
         user_questions = list(Question.objects.filter(user=user_id).values())
         user_answers = list(Answer.objects.filter(user=user_id).values())
@@ -110,7 +112,7 @@ def user_profile(request, user_id):
             'questions': user_questions,
             'answers': user_answers,
             'follower': follower,
-            'UserFollowing': UserFollowing,
+            'following': following,
             })
     except:
         return HttpResponseBadRequest()
@@ -125,11 +127,13 @@ def follow_unfollow(request):
         loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
         if flag == 'FOLLOW':
             UserFollowing.objects.create(profile=loggedin_user,
-                             profile_following=current_user)
-            return Response({
-                'flag': flag,
-                'loggedin_user_id': request.auth['user_id'],
-                'user_id': user_id,
-            })
+            profile_following=current_user)
+            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+            return Response(r)
+        if flag == 'UNFOLLOW':
+            UserFollowing.objects.get(profile=loggedin_user,
+            profile_following=current_user).delete()
+            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+            return Response(r)
     except:
         return HttpResponseBadRequest()
