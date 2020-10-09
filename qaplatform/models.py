@@ -11,41 +11,45 @@ from django.contrib.auth import get_user_model
 # 	following = models.TextField(default=None),
 
 class Question(models.Model):
-    user = models.ForeignKey(
-      get_user_model(),
-      on_delete=models.CASCADE,
-    )
-    question = models.CharField(max_length=280)
-    description = models.CharField(max_length=800)
-    # tags = models
-    question_date = models.DateTimeField('date published')
+	user = models.ForeignKey(
+		get_user_model(),
+		on_delete=models.CASCADE,
+	)
+	question = models.CharField(max_length=280)
+	description = models.CharField(max_length=800)
+	# tags = models
+	upvote = models.IntegerField(default=0)
+	downvote = models.IntegerField(default=0)
+	question_date = models.DateTimeField('date published')
 
-    def __str__(self):
-        return f'{self.question}'
+	def __str__(self):
+		return f'{self.question}'
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(
-      get_user_model(),
-      on_delete=models.CASCADE,
-    )
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=10000)
-    answer_date = models.DateTimeField('date published')
-    upvote = models.IntegerField(),
-    downvote = models.IntegerField(),
+	user = models.ForeignKey(
+		get_user_model(),
+		on_delete=models.CASCADE,
+	)
+	question = models.ForeignKey(Question, on_delete=models.CASCADE)
+	answer = models.CharField(max_length=10000)
+	answer_date = models.DateTimeField('date published')
+	upvote = models.IntegerField(default=0)
+	downvote = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f'{self.answer}'
+	def __str__(self):
+		return f'{self.answer}'
 
 class Comment(models.Model):
-    user = models.ForeignKey(
-      get_user_model(),
-      on_delete=models.CASCADE,
-    )
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    comment = models.CharField(max_length= 5000)
-    comment_date = models.DateTimeField('date published')
+	user = models.ForeignKey(
+		get_user_model(),
+		on_delete=models.CASCADE,
+	)
+	answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+	comment = models.CharField(max_length= 5000)
+	comment_date = models.DateTimeField('date published')
+	upvote = models.IntegerField(default=0)
+	downvote = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f'{self.comment}'
+	def __str__(self):
+		return f'{self.comment}'

@@ -55,7 +55,8 @@ def post_answer(request):
         a = Answer(answer=answer, answer_date=answer_date, question=question, user=user)
         a.save()
         # return question_with_answer(request, question_id)
-        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
+        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -71,7 +72,8 @@ def post_question(request):
         user = User.objects.get(pk=user_id)
         q = Question(question=question, question_date=question_date, user=user)
         q.save()
-        r = requests.get('http://localhost:8000/api/question-list', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+        r = requests.get('http://localhost:8000/api/question-list', 
+        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -90,7 +92,8 @@ def post_comment(request):
         answer = Answer.objects.get(pk=answer_id)
         c = Comment(comment_date=comment_date, answer=answer, user=user, comment=comment)
         c.save()
-        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
+        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -125,15 +128,26 @@ def follow_unfollow(request):
         flag, user_id = request.data.values()
         current_user = Profile.objects.get(pk=user_id) 
         loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
+        
         if flag == 'FOLLOW':
             UserFollowing.objects.create(profile=loggedin_user,
             profile_following=current_user)
-            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', 
+            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
             return Response(r)
         if flag == 'UNFOLLOW':
             UserFollowing.objects.get(profile=loggedin_user,
             profile_following=current_user).delete()
-            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', headers={'Authorization': f'{request.authenticators[0].keyword} {request.auth.key}'}).json()
+            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', 
+            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
             return Response(r)
     except:
         return HttpResponseBadRequest()
+
+
+    # @api_view(['POST'])
+    # @permission_classes([IsAuthenticated])
+    # def upvote_downvote(request):
+    #     try:
+    #         flag, section = request.data.value()
+    #         if falg == ''
