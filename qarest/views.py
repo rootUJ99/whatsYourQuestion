@@ -145,9 +145,17 @@ def follow_unfollow(request):
         return HttpResponseBadRequest()
 
 
-    # @api_view(['POST'])
-    # @permission_classes([IsAuthenticated])
-    # def upvote_downvote(request):
-    #     try:
-    #         flag, section = request.data.value()
-    #         if falg == ''
+    @api_view(['POST'])
+    @permission_classes([IsAuthenticated])
+    def upvote_downvote(request):
+        try:
+            flag, section, id = request.data.value()
+            if flag == 'UPVOTE':
+                if section == 'question':
+                    pass
+                if section == 'answer':
+                    pass
+                if section == 'comment':
+                    pass
+            if flag == 'DOWNVOTE'
+                pass
