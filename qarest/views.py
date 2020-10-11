@@ -148,14 +148,17 @@ def follow_unfollow(request):
     @api_view(['POST'])
     @permission_classes([IsAuthenticated])
     def upvote_downvote(request):
+        def typeChecker(type):
+            return {
+                'question': 'question',
+                'answer': 'answer',
+                'comment': 'comment',
+            }[type]
         try:
-            flag, section, id = request.data.value()
+            flag, section, section_id = request.data.value()
             if flag == 'UPVOTE':
-                if section == 'question':
-                    pass
-                if section == 'answer':
-                    pass
-                if section == 'comment':
-                    pass
-            if flag == 'DOWNVOTE'
-                pass
+                typeChecker(section)
+            if flag == 'DOWNVOTE':
+                typeChecker(section)
+        except:
+            pass
