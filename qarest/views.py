@@ -3,7 +3,6 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
-from django.utils import timezone
 from qaplatform.models import Question, Answer, Comment
 from qaauth.models import Profile, UserFollowing
 from rest_framework.decorators import permission_classes, api_view
@@ -44,7 +43,6 @@ def question_with_answer(request, question_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def post_answer(request):
-    answer_date = timezone.now()
     try:
         body = request.data
         question_id = body['question_id']
@@ -52,7 +50,7 @@ def post_answer(request):
         user_id = body['user_id']
         question = Question.objects.get(pk=question_id)
         user = User.objects.get(pk=user_id)
-        a = Answer(answer=answer, answer_date=answer_date, question=question, user=user)
+        a = Answer(answer=answer, question=question, user=user)
         a.save()
         # return question_with_answer(request, question_id)
         r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
@@ -65,12 +63,11 @@ def post_answer(request):
 @permission_classes([IsAuthenticated])
 def post_question(request):
     try:
-        question_date = timezone.now()
         body = request.data
         question = body['question']
         user_id = body['user_id']
         user = User.objects.get(pk=user_id)
-        q = Question(question=question, question_date=question_date, user=user)
+        q = Question(question=question, user=user)
         q.save()
         r = requests.get('http://localhost:8000/api/question-list', 
         headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
@@ -82,7 +79,6 @@ def post_question(request):
 @permission_classes([IsAuthenticated])
 def post_comment(request):
     try:
-        comment_date = timezone.now()
         body = request.data
         comment = body['comment']
         user_id = body['user_id']
@@ -90,7 +86,7 @@ def post_comment(request):
         question_id = body['question_id']
         user = User.objects.get(pk=user_id)
         answer = Answer.objects.get(pk=answer_id)
-        c = Comment(comment_date=comment_date, answer=answer, user=user, comment=comment)
+        c = Comment(answer=answer, user=user, comment=comment)
         c.save()
         r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
         headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()

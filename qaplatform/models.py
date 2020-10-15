@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from datetime import datetime
+from django.utils import timezone
 class Vote(models.Model):
 	upvote = models.ForeignKey(get_user_model(), related_name='upvoter', null=True, blank=True, on_delete=models.CASCADE
     )
@@ -16,7 +16,7 @@ class Question(models.Model):
 	)
 	question = models.CharField(max_length=280)
 	description = models.CharField(max_length=800)
-	question_date = models.DateTimeField('date published', default=datetime.now())
+	question_date = models.DateTimeField('date published', default=timezone.now())
 	vote = models.ForeignKey(Vote, on_delete=models.CASCADE, default=None, null=True)
 
 	def __str__(self):
@@ -30,7 +30,7 @@ class Answer(models.Model):
 	)
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)
 	answer = models.CharField(max_length=10000)
-	answer_date = models.DateTimeField('date published', default=datetime.now())
+	answer_date = models.DateTimeField('date published', default=timezone.now())
 	vote = models.ForeignKey(Vote, on_delete=models.CASCADE, default=None, null=True)
 
 	def __str__(self):
@@ -43,7 +43,7 @@ class Comment(models.Model):
 	)
 	answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 	comment = models.CharField(max_length= 5000)
-	comment_date = models.DateTimeField('date published', default=datetime.now())
+	comment_date = models.DateTimeField('date published', default=timezone.now())
 	vote = models.ForeignKey(Vote, on_delete=models.CASCADE, default=None, null=True)
 	def __str__(self):
 		return f'{self.comment}'
