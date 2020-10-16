@@ -141,21 +141,22 @@ def follow_unfollow(request):
         return HttpResponseBadRequest()
 
 
-    @api_view(['POST'])
-    @permission_classes([IsAuthenticated])
-    def upvote_downvote(request):
-        def section_checker(section, section_id):
-            # Question.objects.get(pk=section_id).upvote=User.objects.get(pk=request.auth['user_id'])
-            return {
-                'question': 'question',
-                'answer': 'answer',
-                'comment': 'comment',
-            }[section]
-        try:
-            flag, section, section_id = request.data.value()
-            if flag == 'UPVOTE':
-                section_checker(section, section_id)
-            if flag == 'DOWNVOTE':
-                section_checker(section, section_id)
-        except:
-            pass
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def vote(request):
+    def section_checker(section, section_id):
+        Question.objects.get(pk=section_id)
+        # .upvote=User.objects.get(pk=request.auth['user_id'])
+        return {
+            'question': 'question',
+            'answer': 'answer',
+            'comment': 'comment',
+        }[section]
+    try:
+        flag, section, section_id = request.data.values()
+        if flag == 'UPVOTE':
+            section_checker(section, section_id)
+        if flag == 'DOWNVOTE':
+            section_checker(section, section_id)
+    except:
+        pass

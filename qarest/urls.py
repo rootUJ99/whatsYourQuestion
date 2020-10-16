@@ -10,4 +10,5 @@ urlpatterns = [
     path('post-comment', views.post_comment),
     path('profile-info/<int:user_id>/', views.user_profile),
     path('follow-unfollow', views.follow_unfollow),
+    path('vote', views.vote),
 ]
