@@ -3,12 +3,13 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
-from qaplatform.models import Question, Answer, Comment
+from qaplatform.models import Question, Answer, Comment, Vote
 from qaauth.models import Profile, UserFollowing
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from operator import itemgetter
 import json
 import copy
 import requests
@@ -144,19 +145,45 @@ def follow_unfollow(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def vote(request):
-    def section_checker(section, section_id):
-        Question.objects.get(pk=section_id)
-        # .upvote=User.objects.get(pk=request.auth['user_id'])
+    def section_checker(section):
         return {
-            'question': 'question',
-            'answer': 'answer',
-            'comment': 'comment',
+            'question': Question,
+            'answer': Answer,
+            'comment': Comment,
         }[section]
+    
+    def vote_checker(flag, user):
+        upvote_obj = {
+            'upvote' : user
+        }
+        downvote_obj = {
+            'downvote' : user
+        }
+        return {
+            'UPVOTE': upvote_obj,
+            'DOWNVOTE': downvote_obj,
+        }[flag]
+            
     try:
-        flag, section, section_id = request.data.values()
-        if flag == 'UPVOTE':
-            section_checker(section, section_id)
-        if flag == 'DOWNVOTE':
-            section_checker(section, section_id)
+        dict_keys = ['flag', 'section', 'section_id', 'toggle']
+        # flag, section, section_id, toggle = request.data.values()
+        flag, section, section_id, toggle = itemgetter(*dict_keys)(request.data)
+        user = User.objects.get(pk=request.auth['user_id'])
+        section = section_checker(section)
+        if toggle == True:
+            vote_user = vote_checker(flag, user) 
+            vote = Vote.objects.get_or_create(**vote_user)
+            section_obj = getattr(section, 'objects')
+            section_obj.get(pk=section_id).vote = vote[0]
+            return Response({
+                'ok': 'added vote'
+            })
+        if toggle == False:
+            section_obj = getattr(section, 'objects')
+            vote = section_obj.get(pk=section_id).vote
+            Vote.objects.delete(vote)
+            return Response({
+                'ok': 'removed vote'
+            })
     except:
-        pass
+        return HttpResponseBadRequest()
