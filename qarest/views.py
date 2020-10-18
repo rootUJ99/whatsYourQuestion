@@ -175,6 +175,7 @@ def vote(request):
             vote = Vote.objects.get_or_create(**vote_user)
             section_obj = getattr(section, 'objects')
             section_obj.get(pk=section_id).vote = vote[0]
+            section_obj.save()
             return Response({
                 'ok': 'added vote'
             })
