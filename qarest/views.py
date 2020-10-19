@@ -176,15 +176,15 @@ def vote(request):
             section_obj = getattr(section, 'objects')
             section_obj.get(pk=section_id).vote = vote[0]
             section_obj.save()
-            return Response({
-                'ok': 'added vote'
-            })
+            r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
+            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            return Response(r)
         if toggle == False:
             section_obj = getattr(section, 'objects')
             vote = section_obj.get(pk=section_id).vote
             Vote.objects.delete(vote)
-            return Response({
-                'ok': 'removed vote'
-            })
+            r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
+            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            return Response(r)
     except:
         return HttpResponseBadRequest()
