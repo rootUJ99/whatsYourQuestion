@@ -16,9 +16,14 @@ import requests
 from enum import Enum
 from .serializers import CurrentUserSerializer 
 
-# class FollowUnfollow(Enum):
-#     UNFOLLOW = 'unfollow'
-#     FOLLOW = 'follow'
+def request_API(req, method, path, param):
+    proto = req.is_secure() and 'https' or 'http'
+    host = req.get_host()
+    headers = {'Authorization': f'Bearer {req.auth.token.decode()}'}
+    param = param and param or ''
+    request_with_method = getattr(requests, method)
+    r = request_with_method(f'{proto}://{host}/{path}/{param}', headers=headers).json()
+    return r
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -54,8 +59,7 @@ def post_answer(request):
         a = Answer(answer=answer, question=question, user=user)
         a.save()
         # return question_with_answer(request, question_id)
-        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
-        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+        r = request_API(request, 'get', 'api/question-answer-list', question_id)
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -70,8 +74,7 @@ def post_question(request):
         user = User.objects.get(pk=user_id)
         q = Question(question=question, user=user)
         q.save()
-        r = requests.get('http://localhost:8000/api/question-list', 
-        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+        r = request_API(request, 'get', 'api/question-list')
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -89,8 +92,7 @@ def post_comment(request):
         answer = Answer.objects.get(pk=answer_id)
         c = Comment(answer=answer, user=user, comment=comment)
         c.save()
-        r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
-        headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+        r = request_API(request, 'get', 'api/question-answer-list',question_id)
         return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -129,14 +131,12 @@ def follow_unfollow(request):
         if flag == 'FOLLOW':
             UserFollowing.objects.create(profile=loggedin_user,
             profile_following=current_user)
-            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', 
-            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            r = request_API(request, 'get', 'api/profile-info',user_id)
             return Response(r)
         if flag == 'UNFOLLOW':
             UserFollowing.objects.get(profile=loggedin_user,
             profile_following=current_user).delete()
-            r = requests.get(f'http://localhost:8000/api/profile-info/{user_id}/', 
-            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            r = request_API(request, 'get', 'api/profile-info',user_id)
             return Response(r)
     except:
         return HttpResponseBadRequest()
@@ -176,15 +176,13 @@ def vote(request):
             section_obj = getattr(section, 'objects')
             section_obj.get(pk=section_id).vote = vote[0]
             section_obj.save()
-            r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
-            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            r = request_API(request, 'get', 'api/question-answer-list', question_id)
             return Response(r)
         if toggle == False:
             section_obj = getattr(section, 'objects')
             vote = section_obj.get(pk=section_id).vote
             Vote.objects.delete(vote)
-            r = requests.get(f'http://localhost:8000/api/question-answer-list/{question_id}', 
-            headers={'Authorization': f'Bearer {request.auth.token.decode()}'}).json()
+            r = request_API(request, 'get', 'api/question-answer-list', question_id)
             return Response(r)
     except:
         return HttpResponseBadRequest()

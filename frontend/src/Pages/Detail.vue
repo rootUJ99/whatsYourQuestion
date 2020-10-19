@@ -42,7 +42,7 @@
           class="input_answer" 
           name="answer" 
           :value="answer" 
-          @input="e => comment[answer] = e.target.value"
+          @input="e => answer = e.target.value"
         />
         <Button @handleClick="onSubmit">Answer</Button>
       </Card>
