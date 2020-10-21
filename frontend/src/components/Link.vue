@@ -1,39 +1,35 @@
 <template>
-  <button
-    class="link"
-    :class="class"
-    @click="click()"
-  >
-    <slot/>
+  <button class="link" :class="class" @click="click()">
+    <slot />
   </button>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 export default defineComponent({
-  name: 'Link',
+  name: "Link",
   props: {
     handleClick: Function,
     class: String,
   },
-  setup(_, {emit}) {
+  setup(_, { emit }) {
     const click = () => {
-      emit('handleClick')
-    }
+      emit("handleClick");
+    };
     return {
       click,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 
 <style scoped>
-  .link {
-    outline: none;
-    border: none;
-    background: transparent;
-    font-weight: bold;
-    cursor: pointer;
-    color: var(--accent);
-  }
+.link {
+  outline: none;
+  border: none;
+  background: transparent;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--accent);
+}
 </style>

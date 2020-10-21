@@ -11,12 +11,15 @@
     <div class="list_searched" v-if="searchedList">
       <ul class="remove_bullet">
         <li v-for="item in searchedList" :key="item.question">
-          <button class="link_button" @click="handleSearchClick(item.id)">{{item.question}}</button>
+          <button class="link_button" @click="handleSearchClick(item.id)">
+            {{ item.question }}
+          </button>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
 <style>
 .search_question {
   /* width: 80%; */
@@ -47,6 +50,7 @@
   background: transparent;
 }
 </style>
+
 <script>
 import axios from "axios";
 import { ref, computed, watch, onMounted } from "vue";
@@ -62,11 +66,11 @@ export default {
     };
     const handleSearchClick = (id) => {
       router.push({
-            name: 'detail', 
-            params: { id }
-          });
-      searchedList.value=null
-    }
+        name: "detail",
+        params: { id },
+      });
+      searchedList.value = null;
+    };
     return {
       searchedList,
       handleSearch,

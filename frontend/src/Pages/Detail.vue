@@ -3,46 +3,55 @@
     <div class="flex_column">
       <Card class="card_list">
         <template v-slot:header>
-          <CardProfile :handleClick="()=>pushToProfile(list?.question?.user_id)" :name="list?.question?.username"/>
+          <CardProfile
+            :handleClick="() => pushToProfile(list?.question?.user_id)"
+            :name="list?.question?.username"
+          />
         </template>
         {{ list?.question?.question }}
       </Card>
       <div v-if="list?.answers?.length">
-        <Card v-for="(a,index) in list?.answers" class="card_list" :key="a.id">
-        <template v-slot:header>
-          <CardProfile :handleClick="()=>pushToProfile(a?.user_id)" :name="a?.username"/>
-        </template>
+        <Card v-for="(a, index) in list?.answers" class="card_list" :key="a.id">
+          <template v-slot:header>
+            <CardProfile
+              :handleClick="() => pushToProfile(a?.user_id)"
+              :name="a?.username"
+            />
+          </template>
           <div>
-          <p>{{ a.answer }}</p>
-          <div v-if="a.comment.length">
-            <div v-for="c in a.comment" :key="c.id">
-              <div class="comment-container">
-                <div class="veritcal_hr" />
-                <CardProfile :handleClick="()=>pushToProfile(c?.user_id)" :name="c?.username"/>
-                {{ c.comment }}
+            <p>{{ a.answer }}</p>
+            <div v-if="a.comment.length">
+              <div v-for="c in a.comment" :key="c.id">
+                <div class="comment-container">
+                  <div class="veritcal_hr" />
+                  <CardProfile
+                    :handleClick="() => pushToProfile(c?.user_id)"
+                    :name="c?.username"
+                  />
+                  {{ c.comment }}
+                </div>
               </div>
             </div>
-          </div>
-          <Input 
-            type="textarea" 
-            class="input_answer" 
-            name="comment" 
-            :value="comment[index]"
-            @input="e => comment[index] = e.target.value"
-           />
-          <Button @handleClick="onSubmitComment(a.id, index)">
-            Comment
-          </Button>
+            <Input
+              type="textarea"
+              class="input_answer"
+              name="comment"
+              :value="comment[index]"
+              @input="(e) => (comment[index] = e.target.value)"
+            />
+            <Button @handleClick="onSubmitComment(a.id, index)">
+              Comment
+            </Button>
           </div>
         </Card>
       </div>
       <Card class="card_list">
-        <Input 
-          type="textarea" 
-          class="input_answer" 
-          name="answer" 
-          :value="answer" 
-          @input="e => answer = e.target.value"
+        <Input
+          type="textarea"
+          class="input_answer"
+          name="answer"
+          :value="answer"
+          @input="(e) => (answer = e.target.value)"
         />
         <Button @handleClick="onSubmit">Answer</Button>
       </Card>
@@ -56,25 +65,26 @@
   border-left: 0.1rem solid gray;
 }
 </style>
+
 <script>
 import axios from "axios";
-import { ref, onMounted, watchEffect, defineComponent } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useAxios } from '../hooks/useAxios';
-import Card from '../components/Card.vue';
-import Button from '../components/Button.vue';
-import Input from '../components/Input.vue';
-import CardProfile from '../components/CardProfile.vue';
-export default defineComponent ({
+import { ref, onMounted, watchEffect, defineComponent } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useAxios } from "../hooks/useAxios";
+import Card from "../components/Card.vue";
+import Button from "../components/Button.vue";
+import Input from "../components/Input.vue";
+import CardProfile from "../components/CardProfile.vue";
+export default defineComponent({
   name: "Question",
-  props: ['id'],
+  props: ["id"],
   components: {
     Card,
     Button,
     Input,
     CardProfile,
   },
-  setup(props, ctx){
+  setup(props, ctx) {
     const router = useRouter();
     const list = ref(null);
     const answer = ref(null);
@@ -82,27 +92,27 @@ export default defineComponent ({
 
     const pushToProfile = (user_id) => {
       router.push({
-        name: 'profile',
-        params: {id: user_id}
-      })
-    }
+        name: "profile",
+        params: { id: user_id },
+      });
+    };
 
-    const getDetails = async ()=>{
+    const getDetails = async () => {
       try {
         const res = await useAxios(
-        `http://localhost:8000/api/question-answer-list/${props.id}/`
-      );
+          `http://localhost:8000/api/question-answer-list/${props.id}/`
+        );
         console.log(res.data);
         list.value = res?.data;
       } catch (err) {
         console.log("err", err);
       }
-    }
+    };
     // onMounted(getDetails);
     watchEffect(getDetails);
     const onSubmit = async () => {
       try {
-        console.log(ctx, 'router');
+        console.log(ctx, "router");
         const res = await useAxios("http://localhost:8000/api/post-answer", {
           answer: answer.value,
           question_id: list.value.question.id,
@@ -125,7 +135,7 @@ export default defineComponent ({
           question_id: list.value.question.id,
         });
         list.value = res?.data;
-        delete comment.value[index]
+        delete comment.value[index];
       } catch (err) {
         console.log("err", err);
       }
@@ -138,7 +148,7 @@ export default defineComponent ({
       comment,
       onSubmit,
       onSubmitComment,
-    }
+    };
   },
 });
 </script>

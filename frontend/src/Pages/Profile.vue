@@ -2,98 +2,104 @@
   <div>
     <div class="hcenter">
       <div class="container-width profile-grid">
-        <img src="../assets/profile.webp" class="profile-picture"/>
+        <img src="../assets/profile.webp" class="profile-picture" />
         <Card class="profile-card">
-            <div class="profile-subgrid">
-              <h1 class="profile-username">{{profileData?.user?.username}}</h1>
-              <Link @handleClick="handleFollowing"> Following </Link>
-              <Link @handleClick="handleFollower"> Follower </Link>
-              <Button v-if="getUserData()?.user_id != profileData?.user?.id"  class="rounded-button">Follow</Button>
-            </div>
+          <div class="profile-subgrid">
+            <h1 class="profile-username">{{ profileData?.user?.username }}</h1>
+            <Link @handleClick="handleFollowing"> Following </Link>
+            <Link @handleClick="handleFollower"> Follower </Link>
+            <Button
+              v-if="getUserData()?.user_id != profileData?.user?.id"
+              class="rounded-button"
+              >Follow</Button
+            >
+          </div>
         </Card>
       </div>
     </div>
     <div class="hcenter">
-    <div class="button-container container-width ">
-      <Button 
-        class="rounded-button"
-        :disabled="tabToggle === toggle.question"
-        @handleClick="handleTabChange"
+      <div class="button-container container-width">
+        <Button
+          class="rounded-button"
+          :disabled="tabToggle === toggle.question"
+          @handleClick="handleTabChange"
         >
-        Questions
-      </Button>
-      <Button 
-        class="rounded-button" 
-        :disabled="tabToggle === toggle.answer"
-        @handleClick="handleTabChange"
-      >
-        Answers
-      </Button>
-    </div>
+          Questions
+        </Button>
+        <Button
+          class="rounded-button"
+          :disabled="tabToggle === toggle.answer"
+          @handleClick="handleTabChange"
+        >
+          Answers
+        </Button>
+      </div>
     </div>
     <div v-if="tabToggle === toggle.question" class="card-flex">
       <Card class="catd-item" v-for="q in profileData?.questions" :key="q.id">
-        {{q.question}}
+        {{ q.question }}
       </Card>
     </div>
     <div v-if="tabToggle === toggle.answer" class="card-flex">
-      <Card class="catd-item"  v-for="a in profileData?.answers" :key="a.id">
-        {{a.answer}}
+      <Card class="catd-item" v-for="a in profileData?.answers" :key="a.id">
+        {{ a.answer }}
       </Card>
     </div>
   </div>
-  <Modal :toggle="false"/>
+  <Modal :toggle="false" />
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from 'vue';
-import { useAxios } from '../hooks/useAxios';
-import Card from '../components/Card.vue';
-import Button from '../components/Button.vue';
-import Link from '../components/Link.vue';
-import Modal from '../components/Modal.vue';
-import { getUserData } from '../utils';
+import { defineComponent, onMounted, ref } from "vue";
+import { useAxios } from "../hooks/useAxios";
+import Card from "../components/Card.vue";
+import Button from "../components/Button.vue";
+import Link from "../components/Link.vue";
+import Modal from "../components/Modal.vue";
+import { getUserData } from "../utils";
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
   components: {
     Card,
     Link,
     Button,
     Modal,
   },
-  props: ['id'],
-  setup: ({id})=> {
+  props: ["id"],
+  setup: ({ id }) => {
     const toggle = {
-    question: 'QUESTION',
-    answer: 'ANSWER',
-    }
+      question: "QUESTION",
+      answer: "ANSWER",
+    };
     const profileData = ref(null);
     const tabToggle = ref(toggle.question);
     onMounted(async () => {
       try {
-        const res = await useAxios(`http://localhost:8000/api/profile-info/${id}/`);
+        const res = await useAxios(
+          `http://localhost:8000/api/profile-info/${id}/`
+        );
         console.log(res?.data);
         profileData.value = res?.data;
-      } catch (err){
+      } catch (err) {
         console.log("err", err);
       }
-    })
+    });
     const handleFollowing = () => {
       // modal open code
-      console.log('yeah you are following');
-    }
+      console.log("yeah you are following");
+    };
     const handleFollower = () => {
       // modal open code
-      console.log('yeaher you are a follower');
-    }
+      console.log("yeaher you are a follower");
+    };
     const handleTabChange = () => {
-      console.log(tabToggle.value)
+      console.log(tabToggle.value);
       if (tabToggle.value === toggle.question) {
         tabToggle.value = toggle.answer;
       } else {
         tabToggle.value = toggle.question;
       }
-    }
+    };
     return {
       handleFollowing,
       handleFollower,
@@ -102,85 +108,83 @@ export default defineComponent({
       toggle,
       tabToggle,
       getUserData,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 
 <style scoped>
+.profile-grid {
+  display: grid;
+  height: 20%;
+  grid-template-columns: 0.5fr 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr;
+  grid-gap: 0.5rem;
+}
+
+.profile-picture {
+  grid-row: 1/3;
+  grid-column: 1/2;
+  width: 12rem;
+  height: 12rem;
+}
+
+.profile-card {
+  width: 100%;
+  grid-row: 1/3;
+  grid-column: 2/4;
+}
+
+@media (max-width: 600px) {
   .profile-grid {
-    display: grid;
-    height: 20%;
-    grid-template-columns: 0.5fr 1fr 1fr;
-    grid-template-rows: 1fr 0.5fr;
-    grid-gap: 0.5rem;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .container-width {
+    width: 100%;
   }
 
   .profile-picture {
-    grid-row: 1/3;
-    grid-column: 1/2;
-    width: 12rem;
-    height: 12rem;
+    grid-row: 1/2;
+    grid-column: 1/3;
+    justify-self: center;
   }
 
   .profile-card {
-    width: 100%;
-    grid-row: 1/3;
-    grid-column: 2/4;
+    grid-row: 2/3;
+    grid-column: 1/3;
   }
-
-   @media (max-width: 600px){
-    .profile-grid {
-      width: 100%;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-    }
-    .container-width {
-        width: 100%;
-    }
-
-    .profile-picture {
-      grid-row: 1/2;
-      grid-column: 1/3;
-      justify-self: center;
-    }
-
-    .profile-card {
-      grid-row: 2/3;
-      grid-column: 1/3;
-    }
-    
-  }
-  
-  .profile-subgrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 0.5fr;
-    justify-items: start;
-  }
-  .profile-username {
-    grid-column: 1/4;
-  }
-  .button-container {
-    display: flex;
-    margin: 3rem 0 2rem;
-    justify-content: space-evenly;
-  }
-  .container-width {
-    width: 60%;
-  }
-  .rounded-button {
-    border-radius: 4rem;
-    outline: none;
-  }
-  .card-flex{
-    display: grid;
-    width: 100%;
-    grid-gap: 0.5rem;
-    justify-content: center;
-  }
-  .catd-item {
-    justify-self: center;
-    width: 100%;
-  }
+}
+.profile-subgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr;
+  justify-items: start;
+}
+.profile-username {
+  grid-column: 1/4;
+}
+.button-container {
+  display: flex;
+  margin: 3rem 0 2rem;
+  justify-content: space-evenly;
+}
+.container-width {
+  width: 60%;
+}
+.rounded-button {
+  border-radius: 4rem;
+  outline: none;
+}
+.card-flex {
+  display: grid;
+  width: 100%;
+  grid-gap: 0.5rem;
+  justify-content: center;
+}
+.catd-item {
+  justify-self: center;
+  width: 100%;
+}
 </style>

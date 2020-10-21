@@ -1,39 +1,41 @@
 <template>
-  <div 
-    tabindex="0" 
-    role="button" 
-    aria-pressed="false" 
-    class="profile" 
+  <div
+    tabindex="0"
+    role="button"
+    aria-pressed="false"
+    class="profile"
     @click="click()"
   >
-  {{name}}
+    {{ name }}
   </div>
 </template>
+
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 export default defineComponent({
-  name: 'CardProfile',
+  name: "CardProfile",
   props: {
     handleClick: Function,
     name: String,
   },
-  setup(_, {emit}) {
+  setup(_, { emit }) {
     const click = () => {
-      emit('handleClick')
-    }
+      emit("handleClick");
+    };
     return {
       click,
-    }
-  }
+    };
+  },
 });
 </script>
+
 <style>
-  .profile {
-    text-decoration: none;
-    outline: none;
-    cursor: pointer;
-    font-weight: 500;
-    padding-bottom: 0.5rem;
-    font-size: 0.8rem;
-  }
+.profile {
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
 </style>

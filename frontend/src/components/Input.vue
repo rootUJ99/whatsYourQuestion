@@ -1,31 +1,33 @@
 <template>
-  <textarea v-if="type==='textarea'"
-    class="input_style" 
+  <textarea
+    v-if="type === 'textarea'"
+    class="input_style"
     :class="class"
-    :placeholder="placeholder" 
+    :placeholder="placeholder"
     @input="change"
   />
-  <input 
-    v-else-if="typeof(type)==='undefined'"
-    type="text" 
-    class="input_style" 
+  <input
+    v-else-if="typeof type === 'undefined'"
+    type="text"
+    class="input_style"
     :class="class"
-    :placeholder="placeholder" 
+    :placeholder="placeholder"
     @input="change"
   />
-  <input 
+  <input
     v-else
-    :type="type" 
-    class="input_style" 
+    :type="type"
+    class="input_style"
     :class="class"
-    :placeholder="placeholder" 
+    :placeholder="placeholder"
     @input="change"
   />
 </template>
+
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import { defineComponent, ref } from "vue";
 export default defineComponent({
-  name: 'Input',
+  name: "Input",
   props: {
     value: String,
     placeholder: String,
@@ -34,24 +36,25 @@ export default defineComponent({
   },
   model: {
     prop: "value",
-    event: "update"
+    event: "update",
   },
-  setup: (props, {emit}) => {
+  setup: (props, { emit }) => {
     const change = (e) => {
-        console.log('value',props.value)
-        emit('update', props.value)
-    }
+      console.log("value", props.value);
+      emit("update", props.value);
+    };
     return {
       change,
-    }
-  }
-})
+    };
+  },
+});
 </script>
+
 <style scoped>
-  .input_style {
-    border-radius: 0.4rem;
-    padding: 0.7rem;
-    border: none;
-    outline: none;
-  }
+.input_style {
+  border-radius: 0.4rem;
+  padding: 0.7rem;
+  border: none;
+  outline: none;
+}
 </style>
