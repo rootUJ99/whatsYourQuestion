@@ -71,10 +71,10 @@
 
 <script>
 import axios from "axios";
-import { ref, onMounted, defineComponent } from "vue";
+import { ref, reactive, onMounted, defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import { useAxios } from "../hooks/useAxios";
-import { getToken } from "../utils";
+import { getToken, getUserData } from "../utils";
 import Card from "../components/Card.vue";
 import Button from "../components/Button.vue";
 import Input from "../components/Input.vue";
@@ -91,6 +91,7 @@ export default defineComponent({
     const question = ref(null);
     const questions = ref(null);
     const router = useRouter();
+    const userData = reactive(getUserData());
     onMounted(async () => {
       try {
         const res = await useAxios("http://localhost:8000/api/question-list");
@@ -114,7 +115,7 @@ export default defineComponent({
       try {
         const res = await useAxios("http://localhost:8000/api/post-question", {
           question: question.value,
-          user_id: 1,
+          user_id: userData.user_id,
         });
         questions.value = res?.data?.questions;
         question.value = null;

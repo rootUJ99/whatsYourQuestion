@@ -68,9 +68,10 @@
 
 <script>
 import axios from "axios";
-import { ref, onMounted, watchEffect, defineComponent } from "vue";
+import { ref, reactive, onMounted, watchEffect, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAxios } from "../hooks/useAxios";
+import { getUserData } from "../utils";
 import Card from "../components/Card.vue";
 import Button from "../components/Button.vue";
 import Input from "../components/Input.vue";
@@ -89,6 +90,7 @@ export default defineComponent({
     const list = ref(null);
     const answer = ref(null);
     const comment = ref([]);
+    const userData = reactive(getUserData());
 
     const pushToProfile = (user_id) => {
       router.push({
@@ -116,7 +118,7 @@ export default defineComponent({
         const res = await useAxios("http://localhost:8000/api/post-answer", {
           answer: answer.value,
           question_id: list.value.question.id,
-          user_id: list.value.question.user_id,
+          user_id: userData.user_id,
         });
         list.value = res?.data;
         answer.value = null;
@@ -131,7 +133,7 @@ export default defineComponent({
         const res = await useAxios("http://localhost:8000/api/post-comment", {
           comment: comment.value[index],
           answer_id,
-          user_id: list.value.question.user_id,
+          user_id: userData.user_id,
           question_id: list.value.question.id,
         });
         list.value = res?.data;

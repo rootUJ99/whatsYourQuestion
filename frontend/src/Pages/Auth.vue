@@ -28,25 +28,29 @@
           name="email"
           type="text"
           placeholder="Email"
-          v-model="register.email"
+          :value="register.email"
+          @input="(e) => (register.email = e.target.value)"
         />
         <Input
           name="username"
           type="text"
           placeholder="UserName"
-          v-model="register.username"
+          :value="register.username"
+          @input="(e) => (register.username = e.target.value)"
         />
         <Input
           name="password"
           type="password"
           placeholder="Password"
-          v-model="register.password"
+          :value="register.password"
+          @input="(e) => (register.password = e.target.value)"
         />
         <Input
           name="password2"
           type="password"
           placeholder="Confirm Password"
-          v-model="register.password2"
+          :value="register.password2"
+          @input="(e) => (register.password2 = e.target.value)"
         />
         <Button @handleClick="handleRegister">Register</Button>
         <Button @handleClick="handleChange(LOGIN)">or Login</Button>

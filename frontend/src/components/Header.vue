@@ -70,11 +70,11 @@
 </style>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, reactive } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
 
-import { getToken, removeToken } from "../utils";
+import { getToken, removeToken, getUserData } from "../utils";
 export default {
   name: "Header",
   components: {
@@ -84,6 +84,7 @@ export default {
     const router = useRouter();
     const toggle = ref(false);
     const token = ref(getToken());
+    const userData = reactive(getUserData());
     const handleToggle = () => {
       toggle.value = !toggle.value;
     };
@@ -99,7 +100,7 @@ export default {
     const handleProfile = () => {
       router.push({
         name: "profile",
-        params: { id: 1 },
+        params: { id: userData.user_id },
       });
       handleToggle();
     };
