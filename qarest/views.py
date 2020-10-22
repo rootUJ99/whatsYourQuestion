@@ -16,13 +16,13 @@ import requests
 from enum import Enum
 from .serializers import CurrentUserSerializer 
 
-def request_API(req, method, path, param):
+def request_API(req, method, path, param=None):
     proto = req.is_secure() and 'https' or 'http'
     host = req.get_host()
     headers = {'Authorization': f'Bearer {req.auth.token.decode()}'}
-    param = param and param or ''
+    param = param and f'/{param}' or ''
     request_with_method = getattr(requests, method)
-    r = request_with_method(f'{proto}://{host}/{path}/{param}', headers=headers).json()
+    r = request_with_method(f'{proto}://{host}/{path}{param}', headers=headers).json()
     return r
 
 @api_view(['GET'])

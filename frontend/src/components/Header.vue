@@ -1,23 +1,28 @@
 <template>
   <div>
     <div class="headContainer">
-      <div class="profile-dropdown">
-        <button class="profile-button" @click="handleToggle">
-          <span class="material-icons"> person </span>
-        </button>
-        <div class="dropdown-list" v-if="toggle === true && token">
-          <button class="dropdown-button" @click="handleProfile">
-            Profile
+    <button class="home-button" @click="handleRedirectHome">
+      <span class="material-icons home-color"> home </span>
+    </button>
+    <div class="flex-container">
+      <Search />
+        <div class="profile-dropdown">
+          <button class="profile-button" @click="handleToggle">
+            <span class="material-icons"> person </span>
           </button>
-          <button class="dropdown-button" @click="handleLogout">
-            Sign Out
-          </button>
-        </div>
-        <div class="dropdown-list" v-if="toggle === true && token === null">
-          <button class="dropdown-button" @click="handleLogin">Sign In</button>
+          <div class="dropdown-list" v-if="toggle === true && token">
+            <button class="dropdown-button" @click="handleProfile">
+              Profile
+            </button>
+            <button class="dropdown-button" @click="handleLogout">
+              Sign Out
+            </button>
+          </div>
+          <div class="dropdown-list" v-if="toggle === true && token === null">
+            <button class="dropdown-button" @click="handleLogin">Sign In</button>
+          </div>
         </div>
       </div>
-      <Search />
     </div>
   </div>
 </template>
@@ -29,11 +34,15 @@
   background-color: var(--primary);
   width: 100%;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   margin-bottom: 2rem;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   position: sticky;
+}
+.flex-container {
+  display: flex;
+  justify-content:flex-end;
 }
 .profile-dropdown {
   position: relative;
@@ -67,6 +76,14 @@
   color: var(--accent);
   border-radius: 0.2rem;
 }
+.home-button{
+  border: none;
+  background: transparent;
+  outline: none;
+}
+.home-color {
+  color:whitesmoke;
+}
 </style>
 
 <script>
@@ -88,6 +105,11 @@ export default {
     const handleToggle = () => {
       toggle.value = !toggle.value;
     };
+    const handleRedirectHome = () => {
+      router.push({
+        name: 'home',
+      })
+    }
     const handleLogin = () => {
       router.push({ name: "auth" });
       handleToggle();
@@ -111,6 +133,7 @@ export default {
       handleLogout,
       handleToggle,
       handleProfile,
+      handleRedirectHome,
     };
   },
 };
