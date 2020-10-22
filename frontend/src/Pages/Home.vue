@@ -20,7 +20,7 @@
     <Card class="card_list" v-for="q in questions" :key="q.id">
       <template v-slot:header>
         <CardProfile
-          :handleClick="() => pushToProfile(q.user_id)"
+          @handleClick="() => pushToProfile(q.user_id)"
           :name="q.username"
         />
       </template>

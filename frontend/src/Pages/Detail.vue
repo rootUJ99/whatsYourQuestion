@@ -4,7 +4,7 @@
       <Card class="card_list">
         <template v-slot:header>
           <CardProfile
-            :handleClick="() => pushToProfile(list?.question?.user_id)"
+            @handleClick="() => pushToProfile(list?.question?.user_id)"
             :name="list?.question?.username"
           />
         </template>
@@ -14,7 +14,7 @@
         <Card v-for="(a, index) in list?.answers" class="card_list" :key="a.id">
           <template v-slot:header>
             <CardProfile
-              :handleClick="() => pushToProfile(a?.user_id)"
+              @handleClick="() => pushToProfile(a?.user_id)"
               :name="a?.username"
             />
           </template>
@@ -25,7 +25,7 @@
                 <div class="comment-container">
                   <div class="veritcal_hr" />
                   <CardProfile
-                    :handleClick="() => pushToProfile(c?.user_id)"
+                    @handleClick="() => pushToProfile(c?.user_id)"
                     :name="c?.username"
                   />
                   {{ c.comment }}
