@@ -28,7 +28,7 @@ def request_API(req, method, path, param=None):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def question_list(request):
-    question_list = [{**i, 'username': User.objects.get(pk=i['user_id']).username} for i in Question.objects.all().values()]
+    question_list = [{**i, 'username': User.objects.get(pk=i['user_id']).username} for i in Question.objects.order_by('-question_date').values()]
     return Response({'questions': question_list})
 
 @api_view(['GET'])
