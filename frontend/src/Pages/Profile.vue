@@ -11,6 +11,7 @@
             <Button
               v-if="getUserData()?.user_id != profileData?.user?.id"
               class="rounded-button"
+              @handleClick="handlefollowNew"
               >Follow</Button
             >
           </div>
@@ -84,6 +85,16 @@ export default defineComponent({
         console.log("err", err);
       }
     });
+    const handlefollowNew = async () => {
+      try {
+        const res = await useAxios(`http://localhost:8000/api/follow-unfollow`, {
+          flag: true,
+          id
+        })
+      } catch (err) {
+        console.log("err", err);
+      }
+    } 
     const handleFollowing = () => {
       // modal open code
       console.log("yeah you are following");
@@ -108,6 +119,7 @@ export default defineComponent({
       toggle,
       tabToggle,
       getUserData,
+      handlefollowNew,
     };
   },
 });
