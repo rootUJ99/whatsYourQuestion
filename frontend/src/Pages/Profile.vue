@@ -49,7 +49,7 @@
       </Card>
     </div>
   </div>
-  <Modal :toggle="false" />
+  <Modal :toggle="modalToggle" @onClose="modalClose"/>
 </template>
 
 <script>
@@ -75,6 +75,7 @@ export default defineComponent({
       answer: "ANSWER",
     };
     const profileData = ref(null);
+    const modalToggle = ref(false);
     const tabToggle = ref(toggle.question);
     onMounted(async () => {
       try {
@@ -106,12 +107,20 @@ export default defineComponent({
     
     const handleFollowing = () => {
       // modal open code
+      modalToggle.value = true;
       console.log("yeah you are following");
     };
+
     const handleFollower = () => {
       // modal open code
+      modalToggle.value = true;
       console.log("yeaher you are a follower");
     };
+
+    const modalClose = () => {
+      modalToggle.value = false;
+    }
+
     const handleTabChange = () => {
       console.log(tabToggle.value);
       if (tabToggle.value === toggle.question) {
@@ -124,12 +133,14 @@ export default defineComponent({
       handleFollowing,
       handleFollower,
       profileData,
+      modalToggle,
       handleTabChange,
       toggle,
       tabToggle,
       getUserData,
       handlefollowNew,
       checkIfFollowing,
+      modalClose,
     };
   },
 });
