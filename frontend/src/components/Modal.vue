@@ -25,6 +25,7 @@ export default defineComponent({
 
   setup(_, {emit}) {
     const handleClose = () => {
+      console.log
       emit('onClose');
     };
     return {
