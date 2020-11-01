@@ -124,7 +124,8 @@ def user_profile(request, user_id):
 @permission_classes([IsAuthenticated])
 def follow_unfollow(request):
     try:
-        flag, user_id = request.data.values()
+        dict_keys = ['flag', 'user_id']
+        flag, user_id = itemgetter(*dict_keys)(request.data)
         current_user = Profile.objects.get(pk=user_id) 
         loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
         

@@ -6,13 +6,15 @@
         <Card class="profile-card">
           <div class="profile-subgrid">
             <h1 class="profile-username">{{ profileData?.user?.username }}</h1>
-            <Link @handleClick="handleFollowing"> Following </Link>
-            <Link @handleClick="handleFollower"> Follower </Link>
+            <Link @handleClick="handleFollowing"> Following {{profileData?.following?.length }} </Link>
+            <Link @handleClick="handleFollower"> Follower {{profileData?.follower?.length }} </Link>
             <Button
               v-if="getUserData()?.user_id != profileData?.user?.id"
               class="rounded-button"
               @handleClick="handlefollowNew"
-              >Follow</Button
+              >
+              {{checkIfFollowing() ? 'Unfollow' : 'Follow' }}
+              </Button
             >
           </div>
         </Card>
@@ -85,16 +87,23 @@ export default defineComponent({
         console.log("err", err);
       }
     });
+
+    const checkIfFollowing = () => {
+      return !!profileData.value?.follower?.find(it => it.profile_following_id === Number(id));
+    }
+
     const handlefollowNew = async () => {
       try {
         const res = await useAxios(`http://localhost:8000/api/follow-unfollow`, {
-          flag: true,
-          id
+          user_id: id,
+          flag: checkIfFollowing() ? 'UNFOLLOW': 'FOLLOW',
         })
+        profileData.value = res?.data;
       } catch (err) {
         console.log("err", err);
       }
     } 
+    
     const handleFollowing = () => {
       // modal open code
       console.log("yeah you are following");
@@ -120,6 +129,7 @@ export default defineComponent({
       tabToggle,
       getUserData,
       handlefollowNew,
+      checkIfFollowing,
     };
   },
 });
