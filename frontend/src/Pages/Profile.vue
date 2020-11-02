@@ -49,7 +49,11 @@
       </Card>
     </div>
   </div>
-  <Modal :toggle="modalToggle" @onClose="modalClose"/>
+  <Modal :toggle="modalToggle" @onClose="modalClose">
+    <!-- <div v-for="f in following_data">
+      {{}}
+    </div> -->
+  </Modal>
 </template>
 
 <script>
@@ -219,5 +223,8 @@ export default defineComponent({
 .catd-item {
   justify-self: center;
   width: 100%;
+}
+.following-list {
+
 }
 </style>

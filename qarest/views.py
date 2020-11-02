@@ -130,13 +130,13 @@ def follow_unfollow(request):
         loggedin_user = Profile.objects.get(pk=request.auth['user_id'])
         
         if flag == 'FOLLOW':
-            UserFollowing.objects.create(profile=loggedin_user,
-            profile_following=current_user)
+            UserFollowing.objects.create(profile=current_user,
+            profile_following=loggedin_user)
             r = request_API(request, 'get', 'api/profile-info',user_id)
             return Response(r)
         if flag == 'UNFOLLOW':
-            UserFollowing.objects.get(profile=loggedin_user,
-            profile_following=current_user).delete()
+            UserFollowing.objects.get(profile=current_user,
+            profile_following=loggedin_user).delete()
             r = request_API(request, 'get', 'api/profile-info',user_id)
             return Response(r)
     except:
