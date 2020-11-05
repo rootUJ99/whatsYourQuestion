@@ -8,7 +8,7 @@
           placeholder="What is speed of light??"
           class="ask-input"
           :value="question"
-          @input="(e) => (question = e.target.value)"
+          @input="(e) => question = e.target.value"
         />
         <Button class="ask-button" @handleClick="onSubmitQuestion">
           Ask
@@ -19,6 +19,7 @@
   <div class="card-flex">
     <Card class="card_list" v-for="q in questions" :key="q.id">
       <template v-slot:header>
+        <Vote section="question" :section_id ="q.id" />
         <CardProfile
           @handleClick="() => pushToProfile(q.user_id)"
           :name="q.username"
@@ -79,6 +80,7 @@ import Card from "../components/Card.vue";
 import Button from "../components/Button.vue";
 import Input from "../components/Input.vue";
 import CardProfile from "../components/CardProfile.vue";
+import Vote from '../components/Vote.vue';
 export default defineComponent({
   name: "Home",
   components: {
@@ -86,6 +88,7 @@ export default defineComponent({
     Button,
     Input,
     CardProfile,
+    Vote,
   },
   setup() {
     const question = ref(null);
@@ -118,7 +121,7 @@ export default defineComponent({
           user_id: userData.user_id,
         });
         questions.value = res?.data?.questions;
-        question.value = null;
+        question.value = 'null';
       } catch (err) {
         console.log(err);
       }

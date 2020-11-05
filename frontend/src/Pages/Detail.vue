@@ -3,6 +3,7 @@
     <div class="flex_column">
       <Card class="card_list">
         <template v-slot:header>
+          <Vote section="question" :section_id ="list?.question?.id" />
           <CardProfile
             @handleClick="() => pushToProfile(list?.question?.user_id)"
             :name="list?.question?.username"
@@ -13,6 +14,7 @@
       <div v-if="list?.answers?.length">
         <Card v-for="(a, index) in list?.answers" class="card_list" :key="a.id">
           <template v-slot:header>
+            <Vote section="answer" :section_id ="a?.id" />
             <CardProfile
               @handleClick="() => pushToProfile(a?.user_id)"
               :name="a?.username"
@@ -24,6 +26,7 @@
               <div v-for="c in a.comment" :key="c.id">
                 <div class="comment-container">
                   <div class="veritcal_hr" />
+                  <Vote section="comment" :section_id ="c.id" />
                   <CardProfile
                     @handleClick="() => pushToProfile(c?.user_id)"
                     :name="c?.username"
@@ -76,6 +79,7 @@ import Card from "../components/Card.vue";
 import Button from "../components/Button.vue";
 import Input from "../components/Input.vue";
 import CardProfile from "../components/CardProfile.vue";
+import Vote from '../components/Vote.vue';
 export default defineComponent({
   name: "Question",
   props: ["id"],
@@ -84,6 +88,7 @@ export default defineComponent({
     Button,
     Input,
     CardProfile,
+    Vote,
   },
   setup(props, ctx) {
     const router = useRouter();

@@ -15,13 +15,13 @@
 
 <script>
 import { defineComponent } from 'vue';
-import useAxios from '../hooks/useAxios'
+import { useAxios } from '../hooks/useAxios'
 export default defineComponent({
   name: 'Vote',
   components: {},
   props: ['section', 'section_id'],
   setup: () => {
-    const handleVote = (flag) => {
+    const handleVote = async (flag) => {
       try {
         const res = await useAxios(
           `http://localhost:8000/api/vote`,{
