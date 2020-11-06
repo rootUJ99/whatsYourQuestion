@@ -1,5 +1,6 @@
 <template>
   <div class="card" :class="class">
+    <slot name="column-vote" />
     <slot name="header" />
     <slot />
   </div>

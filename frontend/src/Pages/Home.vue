@@ -19,11 +19,13 @@
   <div class="card-flex">
     <Card class="card_list" v-for="q in questions" :key="q.id">
       <template v-slot:header>
-        <Vote section="question" :section_id ="q.id" />
         <CardProfile
           @handleClick="() => pushToProfile(q.user_id)"
           :name="q.username"
         />
+      </template>
+      <template v-slot:column-vote>
+        <Vote section="question" :section_id ="q.id" />
       </template>
       <div
         @click="getDataFromParam(q.id)"
@@ -67,6 +69,9 @@
   display: grid;
   justify-content: center;
   margin-top: 0.5rem;
+}
+.flex-container {
+  display: flex;
 }
 </style>
 

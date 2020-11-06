@@ -1,16 +1,16 @@
 <template>
-<div>
-  <button class="vote-button" @click="handleVote('UPVOTE')">
-    <span class="material-icons">
-      arrow_circle_up
-    </span> 
-  </button>
-  <button class="vote-button" @click="handleVote('DOWNVOTE')">
-    <span class="material-icons">
-      arrow_circle_down
-    </span> 
-  </button>
-</div>
+  <div class="flex-column-container">
+    <button class="vote-button" @click="handleVote('UPVOTE')">
+      <span class="material-icons">
+        arrow_circle_up
+      </span> 
+    </button>
+    <button class="vote-button" @click="handleVote('DOWNVOTE')">
+      <span class="material-icons">
+        arrow_circle_down
+      </span> 
+    </button>
+  </div>
 </template>
 
 <script>
@@ -43,7 +43,14 @@ export default defineComponent({
 <style>
 .vote-button{
   border: none;
+  color: white;
   background: transparent;
   outline: none;
+  padding: none;
+}
+
+.flex-column-container {
+  display: flex;
+  flex-direction: column;
 }
 </style>
