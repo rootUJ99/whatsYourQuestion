@@ -42,7 +42,7 @@ def question_with_answer(request, question_id):
             **ans
         }for ans in answers 
     ]
-    question = [{**que, 'username': User.objects.get(pk=que['user_id']).username} for que in Question.objects.filter().values()][0]
+    question = [{**que, 'username': User.objects.get(pk=que['user_id']).username} for que in Question.objects.filter(pk=question_id).values()][0]
 
     return Response({'question': question, 'answers': answer_with_comment})
 
