@@ -25,7 +25,7 @@
         />
       </template>
       <template v-slot:column-vote>
-        <Vote section="question" :section_id ="q.id" />
+        <!-- <Vote section="question" :section_id ="q.id" /> -->
       </template>
       <div
         @click="getDataFromParam(q.id)"
