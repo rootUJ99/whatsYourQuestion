@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse,
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
@@ -139,8 +139,7 @@ def follow_unfollow(request):
             profile_following=loggedin_user).delete()
             r = request_API(request, 'get', 'api/profile-info',user_id)
             return Response(r)
-    except:
-        return KeyError:
+    except KeyError:
             HttpResponseBadRequest('key error')
     except:
         return HttpResponseBadRequest()
