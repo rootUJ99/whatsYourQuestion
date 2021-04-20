@@ -30,12 +30,12 @@ authors = ["Ujwal <ujwal99arak@gmail.com>"]
 python = "^3.9"
 django = "^3.0.4"
 gunicorn = "^20.0.4"
-python-dotenv = "^0.14.0"
 django-cors-headers = "^3.4.0"
 djangorestframework = "^3.11.1"
 requests = "^2.24.0"
 psycopg2-binary = "^2.8.6"
 djangorestframework-simplejwt = "^4.6.0"
+python-dotenv = "^0.17.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.3"
