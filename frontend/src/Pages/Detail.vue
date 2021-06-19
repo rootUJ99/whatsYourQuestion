@@ -40,7 +40,7 @@
               class="input_answer"
               name="comment"
               :value="comment[index]"
-              @input="(e) => (comment[index] = e.target.value)"
+              @input="(e) => {comment[index] = e.target.value}"
             />
             <Button @handleClick="onSubmitComment(a.id, index)">
               Comment
@@ -50,11 +50,12 @@
       </div>
       <Card class="card_list">
         <Input
-          type="textarea"
           class="input_answer"
           name="answer"
           :value="answer"
-          @input="(e) => (answer = e.target.value)"
+          @input="(e) => {
+            answer = e.target.value
+            }"
         />
         <Button @handleClick="onSubmit">Answer</Button>
       </Card>
@@ -126,7 +127,7 @@ export default defineComponent({
           user_id: userData.user_id,
         });
         list.value = res?.data;
-        answer.value = null;
+        answer.value = "";
       } catch (err) {
         console.log("err", err);
       }

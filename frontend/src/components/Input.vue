@@ -2,6 +2,7 @@
   <textarea
     v-if="type === 'textarea'"
     class="input_style"
+    :value="value"
     :class="class"
     :placeholder="placeholder"
     @input="change"
@@ -9,6 +10,7 @@
   <input
     v-else-if="typeof type === 'undefined'"
     type="text"
+    :value="value"
     class="input_style"
     :class="class"
     :placeholder="placeholder"
@@ -16,6 +18,7 @@
   />
   <input
     v-else
+    :value="value"
     :type="type"
     class="input_style"
     :class="class"
@@ -40,8 +43,8 @@ export default defineComponent({
   },
   setup: (props, { emit }) => {
     const change = (e) => {
+      emit("update:value", props.value);
       console.log("value", props.value);
-      emit("update", props.value);
     };
     return {
       change,
