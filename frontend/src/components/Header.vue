@@ -87,7 +87,7 @@
 </style>
 
 <script>
-import { ref, watchEffect, reactive } from "vue";
+import { ref, watchEffect, reactive, onUpdated, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Search from "./Search.vue";
 
@@ -100,8 +100,11 @@ export default {
   setup() {
     const router = useRouter();
     const toggle = ref(false);
-    const token = ref(getToken());
+    const token = ref();
     const userData = reactive(getUserData());
+    onUpdated(()=>{
+      getToken() ? token.value = getToken() : token.value = null
+    });
     const handleToggle = () => {
       toggle.value = !toggle.value;
     };
