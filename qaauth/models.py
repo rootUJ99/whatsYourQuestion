@@ -14,8 +14,8 @@ class Profile(models.Model):
 #     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
 class UserFollowing(models.Model):
-    profile = models.ForeignKey(Profile, related_name="following", on_delete=models.CASCADE)
-    profile_following = models.ForeignKey(Profile, related_name="followers", on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, related_name="followers", on_delete=models.CASCADE)
+    profile_following = models.ForeignKey(Profile, related_name="following", on_delete=models.CASCADE)
     class Meta:
         unique_together = ("profile", "profile_following")
 

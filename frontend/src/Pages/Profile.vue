@@ -94,7 +94,7 @@ export default defineComponent({
     });
 
     const checkIfFollowing = () => {
-      return !!profileData.value?.follower?.find(it => it.profile_following_id === Number(id));
+      return profileData.value?.follower?.some(it => it.profile_following_id === getUserData()?.user_id);
     }
 
     const handlefollowNew = async () => {
